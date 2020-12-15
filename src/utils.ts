@@ -5,7 +5,7 @@
  */
 
 import localforage from "localforage";
-import { getResMessage, ResponseMessage } from "../../mc-response/src";
+import { getResMessage, ResponseMessage } from "@mconnect/mcresponse";
 
 // types
 interface ValueObject {
