@@ -1,6 +1,6 @@
 # @mconnect/mcutils
 
-- Shared Utility Functions for nodejs, js and ts apps
+- Shared Utility Functions for nodejs, js and ts apps...
 - See the test folder for different test cases / scenarios and usage
 
 ## Installation
