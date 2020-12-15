@@ -4,8 +4,6 @@
  * @Description: shorten long text/string
  */
 
-function shortString(str: string, maxLength: number): string {
+export function shortString(str: string, maxLength = 20): string {
     return str.toString().length > maxLength ? str.toString().substr(0, maxLength) + '...' : str.toString();
 }
-
-export { shortString };

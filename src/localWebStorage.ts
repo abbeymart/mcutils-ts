@@ -4,15 +4,19 @@
  * @Description: local web storage functions
  */
 
-const setCookie = (cname: string, cvalue: string, exdays: number) => {
+import localforage from "localforage";
+
+export const setCookie = (cname: string, cvalue: string, exdays: number) => {
     const d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    // const dt = Date.now()
+    // const exMilliseconds = dt + (exdays * 24 * 60 * 60 * 1000);
     const expires = "expires=" + d.toUTCString();
     // @ts-ignore
     document.cookie = `${cname}=${cvalue}; ${expires}; path=/`;
 };
 
-const getCookie = (cname: string): string => {
+export const getCookie = (cname: string): string => {
     const name = `${cname}=`;
     // @ts-ignore
     const decodedCookie = decodeURIComponent(document.cookie);
@@ -31,7 +35,7 @@ const getCookie = (cname: string): string => {
     return '';
 };
 
-const checkCookie = () => {
+export const checkCookie = () => {
     let username = getCookie('username');
     if (username !== '') {
         //TODO: perform action with set value;
@@ -241,28 +245,4 @@ const getApiToken = async () => {
         console.error('error retrieving localStorage item(getApiToken): ', e.message);
         return '';
     }
-};
-
-export {
-    setCookie,
-    getCookie,
-    checkCookie,
-    setToken,
-    getToken,
-    removeToken,
-    loggedIn,
-    setLoginName,
-    getLoginName,
-    removeLoginName,
-    setCurrentUser,
-    removeCurrentUser,
-    getCurrentUser,
-    setApiToken,
-    getApiToken,
-    removeApiToken,
-    mcStore,
-    mcStoreTest,
-    setItemState,
-    getItemState,
-    removeItemState,
 };
