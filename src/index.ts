@@ -8,8 +8,9 @@
 import utils from "./utils";
 
 export { utils };
-export * from './strToBool';
-export * from './getParamsResponse';
-export * from './shortString';
-export * from './getLocale';
-export * from './validate';
+export * from "./strToBool";
+export * from "./getParamsResponse";
+export * from "./shortString";
+export * from "./getLocale";
+export * from "./validate";
+export * from "./localWebStorage"
