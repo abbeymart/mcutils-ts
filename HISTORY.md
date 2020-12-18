@@ -3,6 +3,11 @@
 ***** Work-In-Progress ***** 
 - TODO: update documentation
 
+## Version 0.2.4
+
+- Release date: Dec 18, 2020...
+- Resolved dependency link error
+
 ## Version 0.2.3
 
 - Release date: Dec 18, 2020...
