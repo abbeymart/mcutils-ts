@@ -1,6 +1,6 @@
 {
   "name": "@mconnect/mcutils",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "mConnect Utility Functions",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",

@@ -3,6 +3,11 @@
 ***** Work-In-Progress ***** 
 - TODO: update documentation
 
+## Version 0.2.3
+
+- Release date: Dec 18, 2020...
+- Resolved utils package type errors
+
 ## Version 0.2.2
 
 - Release date: Dec 16, 2020...
