@@ -3,6 +3,11 @@
 ***** Work-In-Progress ***** 
 - TODO: update documentation
 
+## Version 0.2.5
+
+- Release date: June 06, 2021
+- updated mcresponse to v0.4.1
+
 ## Version 0.2.4
 
 - Release date: Dec 18, 2020...

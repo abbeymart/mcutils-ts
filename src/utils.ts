@@ -30,8 +30,10 @@ interface MessageObject {
 
 type ItemStateType = string | number | object | string[] | number[] | object[];
 
-
 export default {
+    camelToUnderscore(key: string): string {
+        return key.replace(/([A-Z])/g, "_$1").toLowerCase();
+    },
     getLanguage(userLang = 'en-US'): string {
         // Define/set default language variable
         let defaultLang = 'en-US';
