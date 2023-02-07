@@ -3,8 +3,13 @@ import { FrequencyResult, FrequencyValue, QuartilesType, StatFrequencyResult, St
 
 import { counter } from "./utilFuncs";
 
-// mean function returns the average of the arr value summation.
-// Optional precision parameter value defaults to 2.
+/**
+ * @function
+ * @name mean function returns the average of the arr value summation. Optional precision parameter value defaults to 2.
+ * @param {Array<number>} arr
+ * @param {number} [precision = 2]
+ * @return {number}
+ */
 export const mean = (arr: Array<number>, precision = 2): number => {
     if (precision < 1) {
         precision = 2 /// default
@@ -134,7 +139,10 @@ export const minMax = (arr: Array<number>): MinMax => {
     };
 }
 
-// interval calculates the width/interval of the sample data size
+/**
+ * @function
+ * @name interval calculates the width/interval of the sample data size
+ */
 export const interval = (arr: Array<number>): number => {
     // sort numbers, ascending order
     arr.sort((a, b) => a - b);
@@ -145,7 +153,10 @@ export const interval = (arr: Array<number>): number => {
     return Math.ceil(rangeValue / arrLength)
 }
 
-// frequency function returns the frequency / occurrence of a slice of type float.
+/**
+ * @function
+ * @name frequency function returns the frequency / occurrence of a slice of type float.
+ */
 export const frequency = (arr: Array<number>, interval = 1, valueLabel = "value"): FrequencyResult => {
     if (interval < 1) {
         interval = 1 /// default
@@ -193,7 +204,11 @@ export const frequency = (arr: Array<number>, interval = 1, valueLabel = "value"
 }
 
 /**
+ * @function
  * frequencyStat function returns the frequency / relative / cumulative / relative-cumulative frequencies of a slice of type float.
+ * @param {Array<number>} arr
+ * @param {number} [interval=1]
+ * @param {string} [valueLabel="value"]
  */
 export const frequencyStat = (arr: Array<number>, interval = 1, valueLabel = "value"): StatFrequencyResult => {
     if (interval < 1) {
@@ -232,6 +247,8 @@ export const frequencyStat = (arr: Array<number>, interval = 1, valueLabel = "va
  * IQRange InterQuartileRange returns the difference between the first and third quartiles (Q1 and Q3),
  * including quartile-values[Q0/min, Q1/25%, Q2/50%(median), Q3/75% & Q4/max].
  * optional precision parameter value defaults to 2
+ * @param {Array<number>}  arr
+ * @param {number} [precision=2]
  */
 export const IQRange = (arr: Array<number>, precision = 2): QuartilesType => {
     if (precision < 1) {
@@ -366,7 +383,21 @@ export const percentiles = (arr: Array<number>, precision = 2): QuartilesType =>
     }
 }
 
-// TODO: complete the stats-function below
+
+export /**
+ * Calculate the distance between two points.
+ * Points must be given as arrays or objects with equivalent keys.
+ * @param {Array<number>} a
+ * @param {Array<number>} b
+ * @return {number}
+ */
+const distance = (a: Array<number>, b: Array<number>) => {
+    return Math.sqrt(a.map((aPoint, i) => b[i] - aPoint)
+        .reduce((sumOfSquares, diff) => sumOfSquares + (diff * diff), 0)
+    );
+};
+
+// TODO: analyse and complete the stats-function below
 
 /**
  * meanSquareError returns the mean-square-error value from the array of numbers.

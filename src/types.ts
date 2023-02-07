@@ -240,3 +240,7 @@ export interface XmlToJsonResult {
     json: string;
 }
 
+export interface UrlPathInfo {
+    parts: Array<string>;
+    lastIndex: number;
+}

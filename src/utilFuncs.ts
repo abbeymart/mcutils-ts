@@ -1,7 +1,7 @@
 import {
     ArrayValue, ComputationResponse, CounterResult, CsvJsonOutput, CsvOptions,
     CsvToJsonPapaParams, CsvToJsonParams, Locale, LocaleFilesType, LocaleOptions,
-    MessageObject, ObjectType, PERMITTED_SEPARATORS, ValueType, XmlToJsonParams,
+    MessageObject, ObjectType, PERMITTED_SEPARATORS, UrlPathInfo, ValueType, XmlToJsonParams,
 } from "./types";
 import { getResMessage, ResponseMessage } from "@mconnect/mcresponse";
 import Papa from "papaparse";
@@ -11,9 +11,15 @@ import { createReadStream, createWriteStream, readFileSync, writeFile, writeFile
 import csv from "csvtojson";
 import { CSVParseParam } from "csvtojson/src/Parameters";
 import xml2js from "xml2js"
-import { text } from "stream/consumers";
 
-
+/**
+ * @function
+ * @name getFullName - returns the full name from the provided parameters.
+ * @param {string} firstname
+ * @param {string} lastname
+ * @param {string} [middlename = ""]
+ * @return {string}
+ */
 export const getFullName = (firstname: string, lastname: string, middlename = ""): string => {
     if (firstname && middlename && lastname) {
         return `${firstname} ${middlename} ${lastname}`;
@@ -21,13 +27,22 @@ export const getFullName = (firstname: string, lastname: string, middlename = ""
     return `${firstname} ${lastname}`;
 };
 
+/**
+ * @type GetNames - define the return type for the getNames function.
+ */
 export interface GetNames {
     firstname?: string;
     middlename?: string;
     lastname?: string;
 }
 
-// Counter method returns the unique counts of the specified array/slice values[object, int, float, string and bool]
+// .
+/**
+ * @function
+ * @name counter - method returns the unique counts of the specified array/slice values[object, int, float, string and bool]
+ * @param {ArrayValue<any>} val
+ * @return {CounterResult}
+ */
 export const counter = <T extends ValueType>(val: ArrayValue<T>): CounterResult<T> => {
     const count: CounterResult<T> = {}
     for (const it of val) {
@@ -49,7 +64,13 @@ export const counter = <T extends ValueType>(val: ArrayValue<T>): CounterResult<
     return count
 }
 
-// getNames computes/returns firstname, middlename and lastname based on fullName components ([0],[1],[2]).
+//
+/**
+ * @function
+ * @name getNames - computes/returns firstname, middlename and lastname based on fullName components ([0],[1],[2]).
+ * @param {string} fullName
+ * @return {GetNames}
+ */
 export const getNames = (fullName: string): GetNames => {
     const names = fullName.split(" ");
     if (names.length > 2) {
@@ -67,12 +88,23 @@ export const getNames = (fullName: string): GetNames => {
     }
 };
 
-// camelToUnderscore computes and returns the underscore field name for the database table.
+//
+/**
+ * @function
+ * @name camelCaseToUnderscore - computes and returns the underscore field name for the database table.
+ * @param {string} key
+ * @return {string}
+ */
 export function camelCaseToUnderscore(key: string): string {
     return key.replace(/([A-Z])/g, "_$1").toLowerCase();
 }
 
-// caseFieldToUnderscore transforms camelCase or PascalCase name to underscore name, in lowercase
+/**
+ * @function
+ * @name caseFieldToUnderscore transforms camelCase or PascalCase name to underscore name, in lowercase.
+ * @param {string} caseString
+ * @return {string}
+ */
 export const caseFieldToUnderscore = (caseString: string): string => {
     // Create slice of words from the cased-Value, separate at Uppercase-character
     // Looks for sequences of an uppercase letter(non-consecutive) followed by one or more lowercase letters.
@@ -94,7 +126,12 @@ export const caseFieldToUnderscore = (caseString: string): string => {
     return wordsArray.join("_")
 }
 
-// separatorFieldToCamelCase computes and returns the camelCase field name from a sep (default to _) fieldName.
+/**
+ * @function
+ * @name separatorFieldToCamelCase computes and returns the camelCase field name from a sep (default to _) fieldName.
+ * @param {string} text
+ * @param {string} [sep = "_"]
+ */
 export const separatorFieldToCamelCase = (text: string, sep = "_"): ComputationResponse => {
     // accepts word/text and separator[" ", "_", "__", ".", "|", "-"]
     const permittedSeparators = PERMITTED_SEPARATORS || [" ", "_", "__", ".", "|", "-"];
@@ -119,7 +156,13 @@ export const separatorFieldToCamelCase = (text: string, sep = "_"): ComputationR
     };
 };
 
-// separatorFieldToPascalCase computes and returns the PascalCase field name from a sep (default to _) fieldName.
+/**
+ * @function
+ * @name separatorFieldToPascalCase computes and returns the PascalCase field name from a sep (default to _) fieldName.
+ * @param {string} text
+ * @param {string} [sep = "_"]
+ * @return {ComputationResponse}
+ */
 export const separatorFieldToPascalCase = (text: string, sep = "_"): ComputationResponse => {
     // accepts word/text and separator(" ", "_", "__", ".", "|")
     const permittedSeparators = PERMITTED_SEPARATORS || [" ", "_", "__", ".", "|", "-"];
@@ -143,10 +186,22 @@ export const separatorFieldToPascalCase = (text: string, sep = "_"): Computation
     };
 }
 
+/**
+ * @function
+ * @name shortString returns the part of the specified string up to the maximum-length and append '...'.
+ * @param {string} str
+ * @param {number} [maxLength = 20]
+ * @return {string}
+ */
 export function shortString(str: string, maxLength = 20): string {
     return str.toString().length > maxLength ? str.toString().substr(0, maxLength) + "..." : str.toString();
 }
 
+/**
+ * @function
+ * @name getParamsMessage returns the composite message from message-object (key:value pairs).
+ * @param msgObject
+ */
 export function getParamsMessage(msgObject: MessageObject): ResponseMessage {
     if (typeof msgObject !== "object") {
         return getResMessage("validateError", {
@@ -162,6 +217,12 @@ export function getParamsMessage(msgObject: MessageObject): ResponseMessage {
     });
 }
 
+/**
+ * @function
+ * @name stringToBool converts string to boolean.
+ * @param {string} [val = "n"]
+ * @return {boolean}
+ */
 export function stringToBool(val = "n"): boolean {
     const strVal = val.toLowerCase();
     if (strVal === "true" || strVal === "t" || strVal === "yes" || strVal === "y") {
@@ -171,8 +232,14 @@ export function stringToBool(val = "n"): boolean {
 
 // TODO: OPTIONAL - work in progress functions
 
-// pluralize returns the plural value for the given item-name.
-export const pluralize = (n: number, itemName: string, itemPlural = ""): string => {
+/**
+ * @function
+ * @name pluralize returns the plural value for the given item-name.
+ * @param {number} num
+ * @param {string} itemName
+ * @param {string} [itemPlural = ""]
+ */
+export const pluralize = (num: number, itemName: string, itemPlural = ""): string => {
     // @TODO: retrieve plural for itemName from language dictionary {name: plural}
     let itemNamePlural: string;
     if (!itemPlural) {
@@ -181,13 +248,19 @@ export const pluralize = (n: number, itemName: string, itemPlural = ""): string 
     } else {
         itemNamePlural = itemPlural;
     }
-    let result = `${n} ${itemName}`;
-    if (n > 1) {
-        result = `${n} ${itemName}${itemNamePlural}`;
+    let result = `${num} ${itemName}`;
+    if (num > 1) {
+        result = `${num} ${itemName}${itemNamePlural}`;
     }
     return result;
 };
 
+/**
+ * @function
+ * @name getLanguage returns the user defined language or default(en-US).
+ * @param {string} [userLang = "en-US"]
+ * @return {string}
+ */
 export const getLanguage = (userLang = "en-US"): string => {
     // Define/set default language variable
     let defaultLang = "en-US";
@@ -198,7 +271,13 @@ export const getLanguage = (userLang = "en-US"): string => {
     return defaultLang;
 }
 
-// userIpInfo retrieves client-ip information from the specified ipUrl (ip-service).
+/**
+ * @function
+ * @name userIpInfo retrieves client-ip information from the specified ipUrl (ip-service).
+ * @param {string} ipUrl
+ * @param {ObjectType} [options = {}]
+ * @return {Promise<ObjectType>}
+ */
 export const userIpInfo = async (ipUrl = "https://ipinfo.io", options = {}): Promise<ObjectType> => {
     // Get the current user IP address Information
     // TODO: use other method besides ipinfo.io, due to query limit (i.e. 429 error)
@@ -223,12 +302,22 @@ export const userIpInfo = async (ipUrl = "https://ipinfo.io", options = {}): Pro
     }
 };
 
-export const userBrowser = () => {
+/**
+ * @function
+ * @name userBrowser returns the user agent string for the current browse.
+ * @return {string}
+ */
+export const userBrowser = (): string => {
     // push each browser property, as key/value pair, into userBrowser array variable
     return navigator.userAgent;
 };
 
-export const currentUrlInfo = (pathLoc: string): { parts: string[], lastIndex: number } => {
+/**
+ * @function
+ * @name currentUrlInfo returns the local object for the specified language
+ * @param {string} pathLoc
+ */
+export const currentUrlInfo = (pathLoc: string): UrlPathInfo => {
     // this function returns the parts (array) and lastIndex of a URL/pathLocation
     let parts: string[] = [];
     let lastIndex = -1;
@@ -247,6 +336,12 @@ export const currentUrlInfo = (pathLoc: string): { parts: string[], lastIndex: n
     };
 };
 
+/**
+ * @function
+ * @name getPath returns the root path of the URL, i.e. path after the hostname.
+ * @param {Request} req
+ * @return {string}
+ */
 export const getPath = (req: Request): string => {
     let itemPath = req.url || "/mc";
     itemPath = itemPath.split("/")[1];
@@ -255,6 +350,13 @@ export const getPath = (req: Request): string => {
 
 // Validation functions
 
+/**
+ * @function
+ * @name getLocale returns the local object for the specified language.
+ * @param {LocaleFilesType} localeFiles
+ * @param {LocaleOptions} [options = {}]
+ * @return {Locale}
+ */
 export const getLocale = (localeFiles: LocaleFilesType, options: LocaleOptions = {}): Locale => {
     // validate localeFiles as an object
     if (isEmptyObject(localeFiles)) {
@@ -372,6 +474,15 @@ export const getLocale = (localeFiles: LocaleFilesType, options: LocaleOptions =
     }
 }
 
+
+/**
+ * @function
+ * @name getLocale2 returns the local object for the specified language.
+ * @param {LocaleFilesType} localeFiles
+ * @param {LocaleOptions} [options = {}]
+ * @return {Locale}
+ *
+ */
 export function getLocale2(localeFiles: LocaleFilesType, options: LocaleOptions = {}): Locale {
     // validate localeFiles as an object
     if (typeof localeFiles !== "object" || isEmptyObject(localeFiles as ObjectType)) {
@@ -386,10 +497,22 @@ export function getLocale2(localeFiles: LocaleFilesType, options: LocaleOptions 
 
 }
 
+/**
+ * @function
+ * @name isEmptyObject determines if the parameter value is an object type.
+ * @param {ObjectType} val
+ * @return {boolean}
+ */
 export function isEmptyObject(val: ObjectType): boolean {
     return typeof val === "object" ? !(Object.keys(val).length > 0 && Object.values(val).length > 0) : false;
 }
 
+/**
+ * @function
+ * @name strToBool - converts the string or number value to boolean.
+ * @param {string | number} [val = "n"]
+ * @return {boolean}
+ */
 export function strToBool(val: string | number = "n"): boolean {
     const strVal = val.toString().toLowerCase();
     if (strVal === "true" || strVal === "t" || strVal === "yes" || strVal === "y") {
@@ -399,6 +522,12 @@ export function strToBool(val: string | number = "n"): boolean {
     }
 }
 
+/**
+ * @function
+ * @name getAge - returns the age from the dateOfBirth parameter.
+ * @param {string} dateString
+ * @return {number}
+ */
 export function getAge(dateString: string): number {
     const today = new Date();
     const birthDate = new Date(dateString);
@@ -410,16 +539,24 @@ export function getAge(dateString: string): number {
     return age;
 }
 
-// sleep functions await the step/action for the specified milliseconds(ms), defaults to 1000ms(1 second).
+/**
+ * @async
+ * @function
+ * @name sleep functions await the step/action for the specified milliseconds(ms), defaults to 1000ms(1 second).
+ * @param {number} [ms=1000]
+ * @return {Promise<void>}
+ */
 export function sleep(ms = 1000) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 /**
- * csvToObject function converts csv-file to object equivalent - papa-parse-version.
+ * @async
+ * @function
+ * @name csvToObject function converts csv-file to object equivalent - papa-parse-version.
  * Recommended for small-size CSV.
- * @param params
- * @return Array<ObjectType>
+ * @param {CsvToJsonPapaParams} params
+ * @return {Promise<ResponseMessage>.Array<ObjectType>}
  */
 export async function csvToObject(params: CsvToJsonPapaParams): Promise<ResponseMessage> {
     try {
@@ -461,10 +598,12 @@ export async function csvToObject(params: CsvToJsonPapaParams): Promise<Response
 }
 
 /**
- * csvToJson function converts csv-file to json-file and optionally, returns js-object equivalent - papa-parse-version.
+ * @async
+ * @function
+ * @name csvToJson function converts csv-file to json-file and optionally, returns js-object equivalent - papa-parse-version.
  * Recommended for large-size CSV.
  * @param params
- * @return Array<ObjectType>
+ * @return {Promise<ResponseMessage>.Array<ObjectType>}
  */
 export async function csvToJson(params: CsvToJsonPapaParams): Promise<ResponseMessage> {
     let file: fs.promises.FileHandle;
@@ -500,7 +639,7 @@ export async function csvToJson(params: CsvToJsonPapaParams): Promise<ResponseMe
         // return success response
         return getResMessage("success", {
             message: "csv-file to object-value completed successfully",
-            value  : params.returnObject? result : [],
+            value  : params.returnObject ? result : [],
         })
     } catch (e) {
         return getResMessage("conversionError", {
@@ -516,8 +655,11 @@ export async function csvToJson(params: CsvToJsonPapaParams): Promise<ResponseMe
 }
 
 /**
- * jsonToCsv converts json-file to csv-file - papa-parse-version.
- * @param params
+ * @async
+ * @function
+ * @name jsonToCsv converts json-file to csv-file - papa-parse-version.
+ * @param {CsvToJsonPapaParams} params
+ * @return {Promise<ResponseMessage>}
  */
 export async function jsonToCsv(params: CsvToJsonPapaParams): Promise<ResponseMessage> {
     let file: fs.promises.FileHandle;
@@ -558,9 +700,11 @@ export async function jsonToCsv(params: CsvToJsonPapaParams): Promise<ResponseMe
 }
 
 /**
- * csvFileToObject function converts csv-file to object equivalent - csv-package-version.
- * @param params
- * @return Array<ObjectType>
+ * @async
+ * @function
+ * @name csvFileToObject function converts csv-file to object equivalent - csv-package-version.
+ * @param {CsvToJsonParams} params
+ * @return {Promise<ResponseMessage>.Array<ObjectType>}
  */
 export async function csvFileToObject(params: CsvToJsonParams): Promise<ResponseMessage> {
     try {
@@ -580,8 +724,11 @@ export async function csvFileToObject(params: CsvToJsonParams): Promise<Response
 }
 
 /**
- * csvToJsonFile function converts csv-file to json-file - csv-package-version.
- * @param params
+ * @async
+ * @function
+ * @name csvToJsonFile function converts csv-file to json-file - csv-package-version.
+ * @param {CsvToJsonParams} params
+ * @return {Promise<ResponseMessage>}
  */
 export async function csvToJsonFile(params: CsvToJsonParams): Promise<ResponseMessage> {
     try {
@@ -610,9 +757,11 @@ export async function csvToJsonFile(params: CsvToJsonParams): Promise<ResponseMe
 }
 
 /**
- * csvToJson function converts csv-file to json-file, using stream-subscribe method - csv-package-version.
+ * @async
+ * @function
+ * @name csvToJson function converts csv-file to json-file, using stream-subscribe method - csv-package-version.
  * @param params
- * @return Array<ObjectType>
+ * @return {Promise<ResponseMessage>.Array<ObjectType>}
  */
 export async function csvFileToObject2(params: CsvToJsonParams): Promise<ResponseMessage> {
     try {
@@ -651,9 +800,11 @@ export async function csvFileToObject2(params: CsvToJsonParams): Promise<Respons
 }
 
 /**
- * xmlToJsonFile function converts xml-file to json-file. It returns the object-value equivalent.
- * @param params
- * @return Array<ObjectType>
+ * @async
+ * @function
+ * @name xmlToJsonFile - function converts xml-file to json-file. It returns the object-value equivalent.
+ * @param {XmlToJsonParams} params
+ * @return {Promise<ResponseMessage>.Array<ObjectType>} - return value is an array of object
  */
 export async function xmlToJsonFile(params: XmlToJsonParams): Promise<ResponseMessage> {
     try {
@@ -667,14 +818,15 @@ export async function xmlToJsonFile(params: XmlToJsonParams): Promise<ResponseMe
         // transform csv to object value
         const result: Array<ObjectType> = []
         const parser = new xml2js.Parser();
-        // const xml = readFileSync(params.xmlPath)
-        fs.readFile(params.xmlPath, function(err, data) {
+        // read file and parse
+        fs.readFile(params.xmlPath, function (err, data) {
             if (err) {
                 return getResMessage("conversionError", {
-                    message: `Error opening xml-file: ${params.xmlPath} :: ${err.message}`,
+                    message: `Error opening/reading xml-file: ${params.xmlPath} :: ${err.message}`,
                     value  : [],
                 })
             }
+            // parse the xml-file content
             parser.parseString(data, function (err, obj) {
                 if (!err) {
                     writeFileSync(params.jsonPath, JSON.stringify(obj))
