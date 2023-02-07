@@ -1,6 +1,6 @@
 import {
     ArrayOfNumber, ArrayOfString, Locale, LocaleFilesType, MinMax, LocaleOptions
-} from "../../src/index.ts";
+} from "../../src";
 
 // collection
 export const arrayOfNumber: ArrayOfNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,];

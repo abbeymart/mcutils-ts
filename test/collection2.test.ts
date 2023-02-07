@@ -1,14 +1,14 @@
 import {
     assertEquals, assertNotEquals, mcTest, postTestResult,
-} from "../test_deps.ts";
-import { counterGeneric, set, setOfNumber, setOfString, setOfSymbol, } from "../src/index.ts";
+} from "@mconnect/mctest";
+import { counterGeneric, set, setOfNumber, setOfString, setOfSymbol, } from "../src";
 import {
     booleanParams,
     countNumResult, countNumResultKeys, countStringResult, countStringResultKeys, numParams, setBooleanResult,
     setNumResult,
     setStingResult, setSymbolResult,
     stringParams, symbolParams
-} from "./data/maths.ts";
+} from "./data/maths";
 
 (async () => {
     const startTime = Date.now();
@@ -134,7 +134,7 @@ import {
     });
 
 
-    postTestResult();
+    await postTestResult();
 
     console.log(`\nTest Completed in ${Date.now() - startTime}ms\n`);
 })();

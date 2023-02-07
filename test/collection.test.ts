@@ -1,14 +1,14 @@
 import {
     assertEquals, assertNotEquals, mcTest, postTestResult,
-} from "../test_deps.ts";
+} from "@mconnect/mctest";
 import {
     ArrayOfNumber, filterGen, mapGen, takeVer2, takeGenVer2, takeGen, take, ArrayOfString,
-} from "../src/index.ts";
+} from "../src";
 import {
     arrayOfNumber, arrayOfString, filterEvenNumFunc, filterEvenNumFuncResult, filterOddNumFunc, filterOddNumFuncResult,
     filterStringIncludeABC, filterStringIncludeABCResult,
     mapDoubleNumFunc, mapDoubleNumFuncResult, take7CountResult, take7NumResult, take7StringResult,
-} from "./data/testData.ts";
+} from "./data/testData";
 
 (async () => {
     const startTime = Date.now();
@@ -161,7 +161,7 @@ import {
         },
     });
 
-    postTestResult();
+    await postTestResult();
 
     console.log(`\nTest Completed in ${Date.now() - startTime}ms\n`);
 })();

@@ -1,15 +1,15 @@
 import {
     assertEquals, assertNotEquals, mcTest, postTestResult,
-} from "../test_deps.ts";
+} from "@mconnect/mctest";
 import {
     ArrayOfNumber, ArrayOfString,
     factNumGen, factorialFromNumGen, factorialSeries, factorialTail, fiboArray, fibos, fiboSeriesGen, fiboTail, isPrime,
     leapYear, naturalNumbers, positiveNumbers, primeNumbers, pythagoras, pythagorasGen, reverseArray, reverseArrayGen
-} from "../src/index.ts";
+} from "../src";
 import {
     notLeapYear, aLeapYear, factorialValue, factorialParam, fibSeriesParam, fibSeriesResult, primeNums, primeNumParam,
     pythagorasParam, pythagorasResult, pythagorasParam100, pythagorasResult100,
-} from "./data/maths.ts";
+} from "./data/maths";
 
 (async () => {
     const startTime = Date.now();

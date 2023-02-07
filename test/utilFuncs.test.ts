@@ -1,6 +1,6 @@
 import {
     assertEquals, assertNotEquals, mcTest, postTestResult, assertNotStrictEquals, assertStrictEquals
-} from "../test_deps.ts";
+} from "@mconnect/mctest";
 import {
     camelCaseValue, dotSepParam, emptyObjectValue, firstname, fullnameThree, fullnameTwo, lastname, middlename,
     nonEmptyObjectValue, paramObjectMsgData, paramObjectMsgResult,
@@ -8,11 +8,11 @@ import {
     pipeSepParam, short20StringResult, short21StringResult, shortStringParam,
     spaceSepParam,
     underscoreValue
-} from "./data/utilFuncs.ts";
+} from "./data/utilFuncs";
 import {
     camelCaseToUnderscore, separatorFieldToPascalCase, separatorFieldToCamelCase, getFullName, getNames, isEmptyObject, shortString,
     getParamsMessage, stringToBool,
-} from "../src/index.ts";
+} from "../src";
 
 (async () => {
     const startTime = Date.now();
@@ -320,7 +320,7 @@ import {
         },
     });
 
-    postTestResult();
+    await postTestResult();
 
     console.log(`\nTest Completed in ${Date.now() - startTime}ms\n`);
 })();

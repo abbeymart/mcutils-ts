@@ -143,7 +143,7 @@ export const isLabelCode = (param: string): boolean => {
 
 export const isErrorCode = (param: string): boolean => {
     // error code format (AB10-100, AB900)
-    const errorCodePattern = /^[a-zA-Z0-9]+[-]*[0-9]*$/;
+    const errorCodePattern = /^[a-zA-Z0-9]+-*[0-9]*$/;
     return errorCodePattern.test(param);
 };
 

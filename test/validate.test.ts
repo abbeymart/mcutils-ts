@@ -1,13 +1,13 @@
 import {
     assertEquals, assertNotEquals, mcTest, postTestResult,
-} from "../test_deps.ts";
+} from "@mconnect/mctest";
 import {
     isArrayType, isEmail, isEmpty, isEven, isNumberDigit, isNumberFloat, isObjectType, isOdd, isPassword, isPhone,
     isPostalCode,
     isProvided,
     isStringAlpha,
     isStringChar,
-} from "../src/index.ts";
+} from "../src";
 
 (async () => {
     const startTime = Date.now();
@@ -273,7 +273,7 @@ import {
         },
     });
 
-    postTestResult();
+    await postTestResult();
 
     console.log(`\nTest Completed in ${Date.now() - startTime}ms\n`);
 })();

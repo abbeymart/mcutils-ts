@@ -1,12 +1,12 @@
 import {
     assertEquals, assertNotEquals, assertNotStrictEquals, assertStrictEquals,
     mcTest, postTestResult,
-} from "../test_deps.ts";
-import { getLocale, Locale, LocaleFunc, } from "../src/index.ts";
+} from "@mconnect/mctest";
+import { getLocale, Locale, LocaleFunc, } from "../src";
 import {
     localeConstantFiles, localeConstantObject, localeConstantOptions, localeLabelOptions, localeLabelFiles,
     localeLabelObject
-} from "./data/testData.ts";
+} from "./data/testData";
 
 (async () => {
     const startTime = Date.now();
@@ -35,7 +35,7 @@ import {
         },
     });
 
-    postTestResult();
+    await postTestResult();
 
     console.log(`\nTest Completed in ${Date.now() - startTime}ms\n`);
 })();

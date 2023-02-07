@@ -1,4 +1,4 @@
-import { ArrayOfNumber, ArrayOfString, ArrayOfSymbol, CounterType } from "../../src/index.ts";
+import { ArrayOfNumber, ArrayOfString, ArrayOfSymbol, CounterType } from "../../src";
 
 export const aLeapYear = 2000;
 export const notLeapYear = 2022;

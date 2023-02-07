@@ -1,11 +1,11 @@
 import {
     assertEquals, assertNotEquals, mcTest, postTestResult,
-} from "../test_deps.ts";
-import { max, mean, median, min, minMax, populationStandardDeviation, sampleStandardDeviation } from "../src/index.ts";
+} from "@mconnect/mctest";
+import { max, mean, median, min, minMax, populationStandardDeviation, sampleStandardDeviation } from "../src";
 import {
     arrayOfNumber, arrayOfNumber2, maxResult, meanResult, medianResult, minMaxResult, minResult, stdDeviationResult,
     stdDeviationResultEst, stdDeviationResultEst2,
-} from "./data/testData.ts";
+} from "./data/testData";
 
 (async () => {
     const startTime = Date.now();
@@ -104,7 +104,7 @@ import {
 
     // IQRange
 
-    postTestResult();
+    await postTestResult();
 
     console.log(`\nTest Completed in ${Date.now() - startTime}ms\n`);
 })();
