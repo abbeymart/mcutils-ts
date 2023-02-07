@@ -3,6 +3,11 @@
 ***** Work-In-Progress ***** 
 - TODO: update documentation
 
+## Version 0.2.6
+
+- Release date: Feb 06, 2023
+- updated-with-deno-funcs-v0.2.6
+
 ## Version 0.2.5
 
 - Release date: June 06, 2021

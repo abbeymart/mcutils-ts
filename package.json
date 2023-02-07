@@ -1,6 +1,6 @@
 {
   "name": "@mconnect/mcutils",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "mConnect Utility Functions",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
@@ -30,16 +30,18 @@
     "url": "https://github.com/abbeymart/mcutils-ts/issues"
   },
   "homepage": "https://github.com/abbeymart/mcutils-ts#readme",
-  "devDependencies": {
-    "@mconnect/mctest": "^0.2.7",
-    "@types/localforage": "^0.0.34",
-    "@types/node": "^14.14.13",
-    "typescript": "^4.1.3"
-  },
   "dependencies": {
-    "@mconnect/mcauditlog": "^0.2.5",
-    "@mconnect/mccache": "^0.3.0",
-    "@mconnect/mcresponse": "^0.4.1",
-    "localforage": "^1.9.0"
+    "@mconnect/mcresponse": "^0.6.0",
+    "csvtojson": "^2.0.10",
+    "localforage": "^1.10.0",
+    "papaparse": "^5.3.2",
+    "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "@mconnect/mctest": "^0.5.5",
+    "@types/node": "^18.11.19",
+    "@types/papaparse": "^5.3.7",
+    "@types/xml2js": "^0.4.11",
+    "typescript": "^4.9.5"
   }
 }
