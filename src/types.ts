@@ -213,6 +213,7 @@ export interface CsvToJsonPapaParams {
     csvPath: string;
     jsonPath: string;
     options: CsvOptions;
+    returnObject?: boolean
 }
 
 export interface CsvToJsonParams {

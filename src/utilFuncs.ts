@@ -11,6 +11,7 @@ import { createReadStream, createWriteStream, readFileSync, writeFile, writeFile
 import csv from "csvtojson";
 import { CSVParseParam } from "csvtojson/src/Parameters";
 import xml2js from "xml2js"
+import { text } from "stream/consumers";
 
 
 export const getFullName = (firstname: string, lastname: string, middlename = ""): string => {
@@ -415,7 +416,8 @@ export function sleep(ms = 1000) {
 }
 
 /**
- * csvToObject function converts csv-file to object equivalent.
+ * csvToObject function converts csv-file to object equivalent - papa-parse-version.
+ * Recommended for small-size CSV.
  * @param params
  * @return Array<ObjectType>
  */
@@ -436,8 +438,8 @@ export async function csvToObject(params: CsvToJsonPapaParams): Promise<Response
         Papa.parse(params.csvPath, {
             worker  : true,
             step    : function (row) {
-                result.push(row.data as unknown as ObjectType)
                 console.log("Row:", row.data);
+                result.push((row.data as unknown as Array<ObjectType>)[0])
             },
             complete: function () {
                 console.log("All done!");
@@ -459,7 +461,8 @@ export async function csvToObject(params: CsvToJsonPapaParams): Promise<Response
 }
 
 /**
- * csvToJson function converts csv-file to json-file.
+ * csvToJson function converts csv-file to json-file and optionally, returns js-object equivalent - papa-parse-version.
+ * Recommended for large-size CSV.
  * @param params
  * @return Array<ObjectType>
  */
@@ -478,69 +481,26 @@ export async function csvToJson(params: CsvToJsonPapaParams): Promise<ResponseMe
         }
         // transform and save
         file = await open(params.jsonPath, "a+");
+        // transform csv to object value
+        const result: Array<ObjectType> = []
         Papa.parse(params.csvPath, {
             worker  : true,
             step    : async function (row) {
-                await file.appendFile(JSON.stringify(row.data as unknown as ObjectType))
                 console.log("Row:", row.data);
+                await file.appendFile(JSON.stringify((row.data as unknown as Array<ObjectType>)[0]))
+                if (params.returnObject) {
+                    result.push((row.data as unknown as Array<ObjectType>)[0])
+                }
             },
             complete: function () {
                 console.log("All done!");
             },
             ...options,
         });
-
         // return success response
         return getResMessage("success", {
-            message: "success",
-            value  : {},
-        })
-    } catch (e) {
-        return getResMessage("conversionError", {
-            message: `${e.message}`,
-            value  : [],
-        })
-    } finally {
-        if (file!) {
-            await file.close()
-        }
-
-    }
-}
-
-// TODO: review / complete??
-export async function jsonToCsv(params: CsvToJsonPapaParams): Promise<ResponseMessage> {
-    let file: fs.promises.FileHandle;
-    try {
-        const options: CsvOptions = {};
-        if (params.options.header) {
-            options.header = params.options.header as boolean
-        }
-        if (params.options.dynamicTyping) {
-            options.dynamicTyping = params.options.dynamicTyping as boolean
-        }
-        if (params.options.comment) {
-            options.comment = params.options.comment as string
-        }
-        // transform and save
-        // const jsonFile = fs.openSync(params.jsonPath, "a+", 0o666)
-        file = await open(params.jsonPath, "a+");
-        Papa.parse(params.csvPath, {
-            worker  : true,
-            step    : async function (row) {
-                await file.appendFile(JSON.stringify(row.data as unknown as ObjectType))
-                console.log("Row:", row.data);
-            },
-            complete: function () {
-                console.log("All done!");
-            },
-            ...options,
-        });
-
-        // return success response
-        return getResMessage("success", {
-            message: "success",
-            value  : {},
+            message: "csv-file to object-value completed successfully",
+            value  : params.returnObject? result : [],
         })
     } catch (e) {
         return getResMessage("conversionError", {
@@ -556,7 +516,49 @@ export async function jsonToCsv(params: CsvToJsonPapaParams): Promise<ResponseMe
 }
 
 /**
- * csvToObject function converts csv-file to object equivalent.
+ * jsonToCsv converts json-file to csv-file - papa-parse-version.
+ * @param params
+ */
+export async function jsonToCsv(params: CsvToJsonPapaParams): Promise<ResponseMessage> {
+    let file: fs.promises.FileHandle;
+    try {
+        const options: CsvOptions = {};
+        if (params.options.header) {
+            options.header = params.options.header as boolean
+        }
+        if (params.options.dynamicTyping) {
+            options.dynamicTyping = params.options.dynamicTyping as boolean
+        }
+        if (params.options.comment) {
+            options.comment = params.options.comment as string
+        }
+        // open csv-file for writing
+        file = await open(params.csvPath, "w+");
+        // read jsonFile content
+        const json = readFileSync(params.jsonPath)
+        // un-parse json-content to csv-content
+        const csvContent = Papa.unparse(JSON.parse(json.toString("utf8")));
+        // write csv-content to file
+        await file.writeFile(csvContent)
+        // return success response
+        return getResMessage("success", {
+            message: "json-file converted to csv-file successfully",
+            value  : [],
+        })
+    } catch (e) {
+        return getResMessage("conversionError", {
+            message: `${e.message}`,
+            value  : [],
+        })
+    } finally {
+        if (file!) {
+            await file.close()
+        }
+    }
+}
+
+/**
+ * csvFileToObject function converts csv-file to object equivalent - csv-package-version.
  * @param params
  * @return Array<ObjectType>
  */
@@ -578,9 +580,8 @@ export async function csvFileToObject(params: CsvToJsonParams): Promise<Response
 }
 
 /**
- * csvToJson function converts csv-file to json-file.
+ * csvToJsonFile function converts csv-file to json-file - csv-package-version.
  * @param params
- * @return Array<ObjectType>
  */
 export async function csvToJsonFile(params: CsvToJsonParams): Promise<ResponseMessage> {
     try {
@@ -591,7 +592,7 @@ export async function csvToJsonFile(params: CsvToJsonParams): Promise<ResponseMe
         if (params.options.output) {
             options.output = params.options.output as CsvJsonOutput
         }
-        // transform csv to json-file
+        // transform csv-file to json-file
         const readStream = createReadStream(params.csvPath);
         const writeStream = createWriteStream(params.jsonPath);
         readStream.pipe(csv(options)).pipe(writeStream);
@@ -609,7 +610,7 @@ export async function csvToJsonFile(params: CsvToJsonParams): Promise<ResponseMe
 }
 
 /**
- * csvToJson function converts csv-file to json-file, using stream-subscribe method.
+ * csvToJson function converts csv-file to json-file, using stream-subscribe method - csv-package-version.
  * @param params
  * @return Array<ObjectType>
  */
@@ -650,7 +651,7 @@ export async function csvFileToObject2(params: CsvToJsonParams): Promise<Respons
 }
 
 /**
- * xmlToJsonFile function converts xml-file to json-file, using stream-subscribe method.
+ * xmlToJsonFile function converts xml-file to json-file. It returns the object-value equivalent.
  * @param params
  * @return Array<ObjectType>
  */
@@ -668,9 +669,22 @@ export async function xmlToJsonFile(params: XmlToJsonParams): Promise<ResponseMe
         const parser = new xml2js.Parser();
         // const xml = readFileSync(params.xmlPath)
         fs.readFile(params.xmlPath, function(err, data) {
+            if (err) {
+                return getResMessage("conversionError", {
+                    message: `Error opening xml-file: ${params.xmlPath} :: ${err.message}`,
+                    value  : [],
+                })
+            }
             parser.parseString(data, function (err, obj) {
-                writeFileSync(params.jsonPath, JSON.stringify(obj))
-                result.push(obj)
+                if (!err) {
+                    writeFileSync(params.jsonPath, JSON.stringify(obj))
+                    result.push(obj)
+                } else {
+                    return getResMessage("conversionError", {
+                        message: `Error parsing xml-data: ${err.message}`,
+                        value  : [],
+                    })
+                }
             });
         });
         // return success response
