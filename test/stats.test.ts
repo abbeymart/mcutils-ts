@@ -93,7 +93,10 @@ import {
         },
     });
 
+    // geometric mean
+
     // variance
+    
 
     // interval
 

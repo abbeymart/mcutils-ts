@@ -72,16 +72,26 @@ export const stdDeviationResultEst = 3.02765;
 export const arrayOfNumber2: ArrayOfNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5, 9.5];
 export const stdDeviationResultEst2 = 2.74;
 
-// variance
+// export const arrayOfNumber: ArrayOfNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,];
 
+// geometric mean
+export const geoMeanPrecision2Result = 4.53    // precision 5
+export const geoMeanPrecision5Result = 4.52872    // precision 5
+
+// variance
+export const variancePrecision2Result = 9.17 // precision of 2
+export const variancePrecision5Result = 9.16667 // precision of 2
 
 // interval
-
+export const interval = 1
 
 // frequency
+export const arrayOfNumberFreq: ArrayOfNumber = [1, 2, 2, 2, 1, 4, 4, 3, 5, 10,];
+
 
 
 // frequencyStat
 
 
 // IQRange
+

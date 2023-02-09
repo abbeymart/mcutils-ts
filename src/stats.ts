@@ -142,6 +142,8 @@ export const minMax = (arr: Array<number>): MinMax => {
 /**
  * @function
  * @name interval calculates the width/interval of the sample data size
+ * @param {Array<number>} arr
+ * @return {number}
  */
 export const interval = (arr: Array<number>): number => {
     // sort numbers, ascending order
