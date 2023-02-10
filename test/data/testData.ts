@@ -89,7 +89,6 @@ export const interval = 1
 export const arrayOfNumberFreq: ArrayOfNumber = [1, 2, 2, 2, 1, 4, 4, 3, 5, 10,];
 
 
-
 // frequencyStat
 
 
