@@ -95,6 +95,46 @@ export const frequencyStatResult: StatFrequencyResult = {
             {
                 label                      : "",
                 value                      : 1,
+                frequency                  : 2,
+                relativeFrequency          : 1.00,
+                cumulativeFrequency        : 1,
+                cumulativeRelativeFrequency: 1.00,
+            },
+            {
+                label                      : "",
+                value                      : 2,
+                frequency                  : 3,
+                relativeFrequency          : 1.00,
+                cumulativeFrequency        : 1,
+                cumulativeRelativeFrequency: 1.00,
+            },
+            {
+                label                      : "",
+                value                      : 3,
+                frequency                  : 1,
+                relativeFrequency          : 1.00,
+                cumulativeFrequency        : 1,
+                cumulativeRelativeFrequency: 1.00,
+            },
+            {
+                label                      : "",
+                value                      : 4,
+                frequency                  : 2,
+                relativeFrequency          : 1.00,
+                cumulativeFrequency        : 1,
+                cumulativeRelativeFrequency: 1.00,
+            },
+            {
+                label                      : "",
+                value                      : 5,
+                frequency                  : 1,
+                relativeFrequency          : 1.00,
+                cumulativeFrequency        : 1,
+                cumulativeRelativeFrequency: 1.00,
+            },
+            {
+                label                      : "",
+                value                      : 10,
                 frequency                  : 1,
                 relativeFrequency          : 1.00,
                 cumulativeFrequency        : 1,
@@ -103,6 +143,60 @@ export const frequencyStatResult: StatFrequencyResult = {
         ],
         interval: 1,
     }
+export const frequencyStatResult2: StatFrequencyResult = {
+    result  : [
+        {
+            label                      : "1<=value<3",
+            value                      : 1,
+            frequency                  : 2,
+            relativeFrequency          : 1.00,
+            cumulativeFrequency        : 1,
+            cumulativeRelativeFrequency: 1.00,
+        },
+        {
+            label                      : "",
+            value                      : 2,
+            frequency                  : 3,
+            relativeFrequency          : 1.00,
+            cumulativeFrequency        : 1,
+            cumulativeRelativeFrequency: 1.00,
+        },
+        {
+            label                      : "",
+            value                      : 3,
+            frequency                  : 1,
+            relativeFrequency          : 1.00,
+            cumulativeFrequency        : 1,
+            cumulativeRelativeFrequency: 1.00,
+        },
+        {
+            label                      : "",
+            value                      : 4,
+            frequency                  : 2,
+            relativeFrequency          : 1.00,
+            cumulativeFrequency        : 1,
+            cumulativeRelativeFrequency: 1.00,
+        },
+        {
+            label                      : "",
+            value                      : 5,
+            frequency                  : 1,
+            relativeFrequency          : 1.00,
+            cumulativeFrequency        : 1,
+            cumulativeRelativeFrequency: 1.00,
+        },
+        {
+            label                      : "",
+            value                      : 10,
+            frequency                  : 1,
+            relativeFrequency          : 1.00,
+            cumulativeFrequency        : 1,
+            cumulativeRelativeFrequency: 1.00,
+        },
+    ],
+    interval: 2,
+}
+
 
 // IQRange
 
@@ -110,9 +204,9 @@ export const iqRange: QuartilesType = {
     minimum: 1,
     maximum: 10, // Q4
     range  : 9,
-    Q1     : 2,
-    Q2     : 5, // Median
-    Q3     : 8,
+    Q1     : 2.5,
+    Q2     : 5.5, // Median
+    Q3     : 7.7,
     Q4     : 10,
     IQR    : 1,
 }

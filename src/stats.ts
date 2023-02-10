@@ -40,7 +40,7 @@ export const geometricMean = (arr: Array<number>, precision = 2): number => {
     for (const v of arr) {
         multi *= v;
     }
-    const result = Math.pow(multi, 1/arrLength);
+    const result = Math.pow(multi, 1 / arrLength);
     return Number(result.toFixed(precision))
 }
 
@@ -176,6 +176,10 @@ export const interval = (arr: Array<number>): number => {
 /**
  * @function
  * @name frequency function returns the frequency / occurrence of a slice of type float.
+ * @param {Array<number>} arr
+ * @param {number} [interval=1]
+ * @param {string} [valueLabel="value"]
+ * @return {FrequencyResult}
  */
 export const frequency = (arr: Array<number>, interval = 1, valueLabel = "value"): FrequencyResult => {
     if (interval < 1) {
@@ -191,10 +195,11 @@ export const frequency = (arr: Array<number>, interval = 1, valueLabel = "value"
         // Obtain the counter values for the arr items
         const arrCounters = counter(arr)
         // compute the frequency/occurrence
-        for(const [_, cVal] of Object.entries(arrCounters)) {
+        for (const [_, cVal] of Object.entries(arrCounters)) {
             freqValue.push({
-                value:     cVal.value,
+                value    : cVal.value,
                 frequency: cVal.count,
+                label    : cVal.value.toString(),
             })
         }
     } else {
@@ -204,21 +209,22 @@ export const frequency = (arr: Array<number>, interval = 1, valueLabel = "value"
             const rangeValue = `${start}<=${valueLabel}<${end}`
             // compute counts of arr values that fall within the rangeValue(start-end)
             let count = 0
-            for (const arrVal  of arr) {
+            for (const arrVal of arr) {
                 if (arrVal >= start || arrVal < end) {
                     count += 1
                 }
             }
             freqValue.push({
-                label: rangeValue,
+                label    : rangeValue,
                 frequency: count,
+                value    : start,
             })
             // next range start
             start += interval
         }
     }
     return {
-        result: freqValue,
+        result  : freqValue,
         interval: interval,
     }
 }
@@ -229,6 +235,7 @@ export const frequency = (arr: Array<number>, interval = 1, valueLabel = "value"
  * @param {Array<number>} arr
  * @param {number} [interval=1]
  * @param {string} [valueLabel="value"]
+ * @return {StatFrequencyResult}
  */
 export const frequencyStat = (arr: Array<number>, interval = 1, valueLabel = "value"): StatFrequencyResult => {
     if (interval < 1) {
@@ -237,8 +244,7 @@ export const frequencyStat = (arr: Array<number>, interval = 1, valueLabel = "va
     // Compute frequency values
     const freqRes = frequency(arr, interval, valueLabel)
     const freqResult = freqRes.result
-    //freqResultLength := len(freqResult)
-    const result:  Array<StatFrequencyValue> = []
+    const result: Array<StatFrequencyValue> = []
     // compute relative / cumulative / relative-cumulative frequencies
     // frequency/occurrence summation
     let freqSum = 0
@@ -249,16 +255,16 @@ export const frequencyStat = (arr: Array<number>, interval = 1, valueLabel = "va
     for (const val of freqResult) {
         cumFreq += val.frequency
         result.push({
-            label:                       val.label as string,
-            value:                       val.value as number,
-            frequency:                   val.frequency,
-            relativeFrequency:           val.frequency / freqSum,
-            cumulativeFrequency:         cumFreq,
+            label                      : val.label ? val.label : "not-specified",
+            value                      : val.value ? val.value : 0,
+            frequency                  : val.frequency,
+            relativeFrequency          : val.frequency / freqSum,
+            cumulativeFrequency        : cumFreq,
             cumulativeRelativeFrequency: cumFreq / freqSum,
         })
     }
     return {
-        result:   result,
+        result  : result,
         interval: freqRes.interval,
     }
 }
@@ -269,6 +275,7 @@ export const frequencyStat = (arr: Array<number>, interval = 1, valueLabel = "va
  * optional precision parameter value defaults to 2
  * @param {Array<number>}  arr
  * @param {number} [precision=2]
+ * @return {QuartilesType}
  */
 export const IQRange = (arr: Array<number>, precision = 2): QuartilesType => {
     if (precision < 1) {
@@ -305,8 +312,8 @@ export const IQRange = (arr: Array<number>, precision = 2): QuartilesType => {
         IQR = Q3 - Q1
     }
     return {
-        minimum:   min,
-        maximum:max, // Q4
+        minimum: min,
+        maximum: max, // Q4
         range  : max - min,
         Q1     : Q1,
         Q2     : Q2, // Median
@@ -316,11 +323,19 @@ export const IQRange = (arr: Array<number>, precision = 2): QuartilesType => {
     }
 }
 
-// deciles returns slice-values that separate the data into 10 equal parts (quantiles). TODO: review/complete.
-// Examples: 10%, 20%[Q2], 30%[Q3]... 100%
+/**
+ * deciles returns slice-values that separate the data into 10 equal parts (quantiles). TODO: review/complete.
+ * Examples: 10%, 20%[Q2], 30%[Q3]... 100%
+ * optional precision parameter value defaults to 2
+ * @param {Array<number>}  arr
+ * @param {number} [precision=2]
+ * @return {QuartilesType} */
 export const deciles = (arr: Array<number>, precision = 2): QuartilesType => {
     if (precision < 1) {
         precision = 2 /// default
+    }
+    if (precision > 16) {
+        precision = 16
     }
     // sort numbers, ascending order
     arr.sort((a, b) => a - b);
@@ -350,8 +365,8 @@ export const deciles = (arr: Array<number>, precision = 2): QuartilesType => {
         IQR = Q3 - Q1
     }
     return {
-        minimum:   min,
-        maximum:max, // Q4
+        minimum: min,
+        maximum: max, // Q4
         range  : max - min,
         Q1     : Q1,
         Q2     : Q2, // Median
@@ -361,8 +376,13 @@ export const deciles = (arr: Array<number>, precision = 2): QuartilesType => {
     }
 }
 
-// Percentiles returns slice-values that separate the data into 100 equal parts (quantiles). TODO: review/complete.
-// Examples: 1%, 2%, 3%... 100%. Optional precision parameter value defaults to 2, maximum of 16.
+/**
+ * percentiles returns slice-values that separate the data into 100 equal parts (quantiles). TODO: review/complete.
+ * Examples: 1%, 2%, 3%... 100%. Optional precision parameter value defaults to 2, maximum of 16.
+ * optional precision parameter value defaults to 2
+ * @param {Array<number>}  arr
+ * @param {number} [precision=2]
+ * @return {QuartilesType} */
 export const percentiles = (arr: Array<number>, precision = 2): QuartilesType => {
     if (precision < 1) {
         precision = 2 /// default
@@ -398,8 +418,8 @@ export const percentiles = (arr: Array<number>, precision = 2): QuartilesType =>
         IQR = Q3 - Q1
     }
     return {
-        minimum:   min,
-        maximum:max, // Q4
+        minimum: min,
+        maximum: max, // Q4
         range  : max - min,
         Q1     : Q1,
         Q2     : Q2, // Median
@@ -409,15 +429,14 @@ export const percentiles = (arr: Array<number>, precision = 2): QuartilesType =>
     }
 }
 
-
-export /**
+/**
  * Calculate the distance between two points.
  * Points must be given as arrays or objects with equivalent keys.
  * @param {Array<number>} a
  * @param {Array<number>} b
  * @return {number}
  */
-const distance = (a: Array<number>, b: Array<number>) => {
+export const distance = (a: Array<number>, b: Array<number>) => {
     return Math.sqrt(a.map((aPoint, i) => b[i] - aPoint)
         .reduce((sumOfSquares, diff) => sumOfSquares + (diff * diff), 0)
     );
