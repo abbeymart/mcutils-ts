@@ -1,5 +1,5 @@
 import {
-    ArrayOfNumber, ArrayOfString, Locale, LocaleFilesType, MinMax, LocaleOptions, StatFrequencyResult
+    ArrayOfNumber, ArrayOfString, Locale, LocaleFilesType, MinMax, LocaleOptions, StatFrequencyResult, QuartilesType
 } from "../../src";
 
 // collection
@@ -69,7 +69,8 @@ export const stdDeviationResult = 3.0276503540974917;   // 16 decimal places
 export const stdDeviationResultEst = 3.02765;
 
 // populationStandardDeviation
-export const arrayOfNumber2: ArrayOfNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5, 9.5];
+export const arrayOfNumber2: ArrayOfNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5,
+    9.5];
 export const stdDeviationResultEst2 = 2.74;
 
 // export const arrayOfNumber: ArrayOfNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,];
@@ -89,9 +90,8 @@ export const interval = 1
 export const arrayOfNumberFreq: ArrayOfNumber = [1, 2, 2, 2, 1, 4, 4, 3, 5, 10,];
 
 // frequencyStat
-export const frequencyStatResult: StatFrequencyResult = [
-    {
-        result: [
+export const frequencyStatResult: StatFrequencyResult = {
+        result  : [
             {
                 label                      : "",
                 value                      : 1,
@@ -99,11 +99,20 @@ export const frequencyStatResult: StatFrequencyResult = [
                 relativeFrequency          : 1.00,
                 cumulativeFrequency        : 1,
                 cumulativeRelativeFrequency: 1.00,
-            }
+            },
         ],
         interval: 1,
-    },
-]
+    }
 
 // IQRange
 
+export const iqRange: QuartilesType = {
+    minimum: 1,
+    maximum: 10, // Q4
+    range  : 9,
+    Q1     : 2,
+    Q2     : 5, // Median
+    Q3     : 8,
+    Q4     : 10,
+    IQR    : 1,
+}
