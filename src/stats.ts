@@ -5,7 +5,7 @@ import { counter } from "./utilFuncs";
 
 /**
  * @function
- * @name mean function returns the average of the arr value summation. Optional precision parameter value defaults to 2.
+ * @name mean function returns the average of the arr value summation. Optional precision parameter value defaults to 2, maximum of 16.
  * @param {Array<number>} arr
  * @param {number} [precision = 2]
  * @return {number}
@@ -13,6 +13,9 @@ import { counter } from "./utilFuncs";
 export const mean = (arr: Array<number>, precision = 2): number => {
     if (precision < 1) {
         precision = 2 /// default
+    }
+    if (precision > 16) {
+        precision = 16
     }
     let sum = 0.00;
     const arrLength = arr.length;
@@ -24,10 +27,13 @@ export const mean = (arr: Array<number>, precision = 2): number => {
 }
 
 // geometricMean function returns the average of the arr value multiplication.
-// Optional precision parameter value defaults to 2.
+// Optional precision parameter value defaults to 2, maximum of 16.
 export const geometricMean = (arr: Array<number>, precision = 2): number => {
     if (precision < 1) {
         precision = 2 /// default
+    }
+    if (precision > 16) {
+        precision = 16
     }
     let multi = 0.00;
     const arrLength = arr.length;
@@ -39,10 +45,13 @@ export const geometricMean = (arr: Array<number>, precision = 2): number => {
 }
 
 // median returns the median value from the array of numbers.
-// Optional precision parameter value defaults to 2.
+// Optional precision parameter value defaults to 2, maximum of 16.
 export const median = (arr: Array<number>, precision = 2): number => {
     if (precision < 1) {
         precision = 2 /// default
+    }
+    if (precision > 16) {
+        precision = 16
     }
     // sort numbers, ascending order
     arr.sort((a, b) => a - b);
@@ -60,10 +69,13 @@ export const median = (arr: Array<number>, precision = 2): number => {
 }
 
 // variance returns the variance value from the array of numbers.
-// Optional precision parameter value defaults to 2.
+// Optional precision parameter value defaults to 2, maximum of 16.
 export const variance = (arr: Array<number>, precision = 2): number => {
     if (precision < 1) {
         precision = 2 /// default
+    }
+    if (precision > 16) {
+        precision = 16
     }
     let deltaSquareSum = 0.00;
     const arrLength = arr.length;
@@ -76,10 +88,13 @@ export const variance = (arr: Array<number>, precision = 2): number => {
 }
 
 // sampleStandardDeviation returns the standard deviation value from the array of numbers.
-// Optional precision parameter value defaults to 2.
+// Optional precision parameter value defaults to 2, maximum of 16.
 export const sampleStandardDeviation = (arr: Array<number>, precision = 2): number => {
     if (precision < 1) {
         precision = 2 /// default
+    }
+    if (precision > 16) {
+        precision = 16
     }
     let deltaSquareSum = 0.00;
     const arrLength = arr.length;
@@ -92,10 +107,13 @@ export const sampleStandardDeviation = (arr: Array<number>, precision = 2): numb
 }
 
 // populationStandardDeviation returns the standard deviation value from the array of numbers.
-// Optional precision parameter value defaults to 2.
+// Optional precision parameter value defaults to 2, maximum of 16.
 export const populationStandardDeviation = (arr: Array<number>, precision = 2): number => {
     if (precision < 1) {
         precision = 2 /// default
+    }
+    if (precision > 16) {
+        precision = 16
     }
     let deltaSquareSum = 0.00;
     const arrLength = arr.length;
@@ -256,6 +274,9 @@ export const IQRange = (arr: Array<number>, precision = 2): QuartilesType => {
     if (precision < 1) {
         precision = 2 /// default
     }
+    if (precision > 16) {
+        precision = 16
+    }
     // sort numbers, ascending order
     arr.sort((a, b) => a - b);
     const arrLength = arr.length
@@ -341,10 +362,13 @@ export const deciles = (arr: Array<number>, precision = 2): QuartilesType => {
 }
 
 // Percentiles returns slice-values that separate the data into 100 equal parts (quantiles). TODO: review/complete.
-// Examples: 1%, 2%, 3%... 100%. Optional precision parameter value defaults to 2.
+// Examples: 1%, 2%, 3%... 100%. Optional precision parameter value defaults to 2, maximum of 16.
 export const percentiles = (arr: Array<number>, precision = 2): QuartilesType => {
     if (precision < 1) {
         precision = 2 /// default
+    }
+    if (precision > 16) {
+        precision = 16
     }
     // sort numbers, ascending order
     arr.sort((a, b) => a - b);

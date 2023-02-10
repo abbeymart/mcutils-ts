@@ -1,5 +1,5 @@
 import {
-    ArrayOfNumber, ArrayOfString, Locale, LocaleFilesType, MinMax, LocaleOptions
+    ArrayOfNumber, ArrayOfString, Locale, LocaleFilesType, MinMax, LocaleOptions, StatFrequencyResult
 } from "../../src";
 
 // collection
@@ -88,9 +88,22 @@ export const interval = 1
 // frequency
 export const arrayOfNumberFreq: ArrayOfNumber = [1, 2, 2, 2, 1, 4, 4, 3, 5, 10,];
 
-
 // frequencyStat
-
+export const frequencyStatResult: StatFrequencyResult = [
+    {
+        result: [
+            {
+                label                      : "",
+                value                      : 1,
+                frequency                  : 1,
+                relativeFrequency          : 1.00,
+                cumulativeFrequency        : 1,
+                cumulativeRelativeFrequency: 1.00,
+            }
+        ],
+        interval: 1,
+    },
+]
 
 // IQRange
 
