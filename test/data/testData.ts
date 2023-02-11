@@ -197,7 +197,6 @@ export const frequencyStatResult2: StatFrequencyResult = {
     interval: 2,
 }
 
-
 // IQRange
 
 export const iqRange: QuartilesType = {

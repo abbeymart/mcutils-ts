@@ -144,7 +144,7 @@ export class KMeans {
              */
             for (let dimension = 0; dimension < dimensionality; dimension++) {
                 const {min, max} = dimensionRanges[dimension];
-                point[dimension] = min + (Math.random()*(max-min));
+                point[dimension] = min + (Math.random() * (max - min));
             }
 
             centroids.push(point);
@@ -214,7 +214,7 @@ export class KMeans {
      * @returns {Array}
      */
     getPointsForCentroid(centroidIndex: number) {
-        const points = [];
+        const points: Array<Array<number>> = [];
         for (let i = 0; i < this.data.length; i++) {
             const assignment = this.centroidAssignments[i];
             if (assignment === centroidIndex) {
@@ -272,7 +272,7 @@ export class KMeans {
             // This version also considers the number of clusters; helpful for
             // our auto-solver so that it doesn't over-fit.
             const thisDistance = distance(point, centroid) + this.k;
-            sumDistanceSquared += thisDistance*thisDistance;
+            sumDistanceSquared += thisDistance * thisDistance;
         }
 
         this.error = Math.sqrt(sumDistanceSquared / this.data.length);
@@ -305,9 +305,9 @@ export class KMeans {
             this.calculateError();
 
             this.iterationLogs[this.iterations] = {
-                centroids: [...this.centroids],
-                iteration: this.iterations,
-                error: this.error,
+                centroids          : [...this.centroids],
+                iteration          : this.iterations,
+                error              : this.error,
                 didReachSteadyState: !didAssignmentsChange
             };
 
@@ -322,7 +322,6 @@ export class KMeans {
         return this.iterationLogs[this.iterationLogs.length - 1];
 
     }
-
 
 
 }
@@ -363,7 +362,7 @@ export class KMeansAutoSolver {
                 const solution: SolutionType = Object.assign({}, solver.solve(maxIterations), {k, currentTrial});
                 this.log.push(solution);
 
-                if (isEmptyObject(this.best as unknown as ObjectType) || (solution.error && this.best.error && solution.error < this.best.error) ) {
+                if (isEmptyObject(this.best as unknown as ObjectType) || (solution.error && this.best.error && solution.error < this.best.error)) {
                     this.best = solution as unknown as ObjectType;
                 }
             }

@@ -1,9 +1,13 @@
 import {
     assertEquals, assertNotEquals, mcTest, postTestResult,
 } from "@mconnect/mctest";
-import { max, mean, median, min, minMax, populationStandardDeviation, sampleStandardDeviation } from "../src";
 import {
-    arrayOfNumber, arrayOfNumber2, maxResult, meanResult, medianResult, minMaxResult, minResult, stdDeviationResult,
+    geometricMean, max, mean, median, min, minMax, populationStandardDeviation, sampleStandardDeviation
+} from "../src";
+import {
+    arrayOfNumber, arrayOfNumber2, geoMeanPrecision2Result, geoMeanPrecision5Result, maxResult, meanResult,
+    medianResult, minMaxResult,
+    minResult, stdDeviationResult,
     stdDeviationResultEst, stdDeviationResultEst2,
 } from "./data/testData";
 
@@ -94,6 +98,25 @@ import {
     });
 
     // geometric mean
+    await mcTest({
+        name    : "Successfully returns geometric mean result, precision of 2",
+        testFunc: () => {
+            const result = geometricMean(arrayOfNumber, 2);
+            console.log("geometricMean2-Res: ", result);
+            assertEquals(result, geoMeanPrecision2Result, `Expected outcome: ${geoMeanPrecision2Result}`);
+            assertNotEquals(result, 1, `Expected outcome: ${geoMeanPrecision2Result}`);
+        },
+    });
+
+    await mcTest({
+        name    : "Successfully returns geometric mean result, precision of 5",
+        testFunc: () => {
+            const result = geometricMean(arrayOfNumber, 5);
+            console.log("geometricMean5-Res: ", result);
+            assertEquals(result, geoMeanPrecision5Result, `Expected outcome: ${geoMeanPrecision5Result}`);
+            assertNotEquals(result, 1, `Expected outcome: ${geoMeanPrecision5Result}`);
+        },
+    });
 
     // variance
 
