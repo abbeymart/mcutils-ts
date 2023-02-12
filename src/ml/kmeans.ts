@@ -7,13 +7,15 @@ export interface IterationLog {
     iteration?: number;
     error?: number;
     didReachSteadyState?: boolean;
+    k?: number;
+    currentTrial?: number;
 }
 
 export type IterationLogs = Array<IterationLog>
 
-export interface SolutionType extends IterationLog {
-    k: number;
-    currentTrial: number;
+export interface MinMaxType {
+    min: number;
+    max: number;
 }
 
 /**
@@ -58,7 +60,7 @@ export class KMeans {
         this.iterationLogs = [];
         this.centroids = this.initRandomCentroids();
         this.centroidAssignments = [];
-        this.reset();
+        // this.reset();
     }
 
     /**
@@ -78,7 +80,7 @@ export class KMeans {
      * Determines the number of dimensions in the data set.
      * @return {number}
      */
-    getDimensionality() {
+    getDimensionality(): number {
         const point = this.data[0];
         return point.length;
     }
@@ -90,9 +92,9 @@ export class KMeans {
      * the data.
      *
      * @param n
-     * @returns {{min: *, max: *}}
+     * @returns {MinMaxType}
      */
-    getRangeForDimension(n: number) {
+    getRangeForDimension(n: number): MinMaxType {
         const values = this.data.map(point => point[n]);
         return {
             min: Math.min.apply(null, values),
@@ -105,8 +107,8 @@ export class KMeans {
      * @see getRangeForDimension
      * @returns {Array} Array whose indices are the dimension number and whose members are the output of getRangeForDimension
      */
-    getAllDimensionRanges() {
-        const dimensionRanges = [];
+    getAllDimensionRanges(): Array<MinMaxType> {
+        const dimensionRanges: Array<MinMaxType> = [];
         const dimensionality = this.getDimensionality();
 
         for (let dimension = 0; dimension < dimensionality; dimension++) {
@@ -126,8 +128,7 @@ export class KMeans {
      * @see getRangeForDimension
      * @returns {Array}
      */
-    initRandomCentroids() {
-
+    initRandomCentroids(): Array<Array<number>> {
         const dimensionality = this.getDimensionality();
         const dimensionRanges = this.getAllDimensionRanges();
         const centroids = [];
@@ -146,13 +147,9 @@ export class KMeans {
                 const {min, max} = dimensionRanges[dimension];
                 point[dimension] = min + (Math.random() * (max - min));
             }
-
             centroids.push(point);
-
         }
-
         return centroids;
-
     }
 
     /**
@@ -164,7 +161,7 @@ export class KMeans {
      * @param pointIndex
      * @returns {boolean} Did the point change its assignment?
      */
-    assignPointToCentroid(pointIndex: number) {
+    assignPointToCentroid(pointIndex: number): boolean {
 
         const lastAssignedCentroid = this.centroidAssignments[pointIndex];
         const point = this.data[pointIndex];
@@ -197,7 +194,7 @@ export class KMeans {
      * @see assignPointToCentroid
      * @returns {boolean} Was any point's centroid assignment updated?
      */
-    assignPointsToCentroids() {
+    assignPointsToCentroids(): boolean {
         let didAnyPointsGetReassigned = false;
         for (let i = 0; i < this.data.length; i++) {
             const wasReassigned = this.assignPointToCentroid(i);
@@ -213,7 +210,7 @@ export class KMeans {
      * @param centroidIndex
      * @returns {Array}
      */
-    getPointsForCentroid(centroidIndex: number) {
+    getPointsForCentroid(centroidIndex: number): Array<Array<number>> {
         const points: Array<Array<number>> = [];
         for (let i = 0; i < this.data.length; i++) {
             const assignment = this.centroidAssignments[i];
@@ -231,10 +228,10 @@ export class KMeans {
      * @param centroidIndex
      * @returns {Array}
      */
-    updateCentroidLocation(centroidIndex: number) {
+    updateCentroidLocation(centroidIndex: number): Array<number> {
         const thisCentroidPoints = this.getPointsForCentroid(centroidIndex);
         const dimensionality = this.getDimensionality();
-        const newCentroid = [];
+        const newCentroid: Array<number> = [];
         for (let dimension = 0; dimension < dimensionality; dimension++) {
             newCentroid[dimension] = mean(thisCentroidPoints.map(point => point[dimension]));
         }
@@ -296,7 +293,7 @@ export class KMeans {
      * @param {Number} maxIterations Default 1000
      * @returns {Object}
      */
-    solve(maxIterations = 1000) {
+    solve(maxIterations = 1000): IterationLog {
 
         while (this.iterations < maxIterations) {
 
@@ -332,18 +329,16 @@ export class KMeansAutoSolver {
     private readonly maxTrials: number;
     private readonly data: Array<Array<number>>;
     private best: IterationLog;
-    protected log: Array<SolutionType>;
+    protected log: Array<IterationLog>;
 
     constructor(kMin = 1, kMax = 5, maxTrials = 5, data: Array<Array<number>>) {
         this.kMin = kMin;
         this.kMax = kMax;
         this.maxTrials = maxTrials;
         this.data = data;
-        this.best = {}
-        // reset
         this.best = {};
         this.log = [];
-        this.reset();
+        // this.reset();
     }
 
     reset() {
@@ -359,10 +354,10 @@ export class KMeansAutoSolver {
 
                 const solver = new KMeans(k, this.data);
                 // Add k and currentTrial number to the solution before logging
-                const solution: SolutionType = Object.assign({}, solver.solve(maxIterations), {k, currentTrial});
+                const solution: IterationLog = Object.assign({}, solver.solve(maxIterations), {k, currentTrial});
                 this.log.push(solution);
 
-                if (isEmptyObject(this.best as unknown as ObjectType) || (solution.error && this.best.error && solution.error < this.best.error)) {
+                if (isEmptyObject(this.best as unknown as ObjectType) || (solution.error && this.best?.error && solution.error < this.best.error)) {
                     this.best = solution as unknown as ObjectType;
                 }
             }

@@ -430,8 +430,8 @@ export const percentiles = (arr: Array<number>, precision = 2): QuartilesType =>
 }
 
 /**
- * Calculate the distance between two points.
- * Points must be given as arrays or objects with equivalent keys.
+ * distance function calculate the distance between two points.
+ * Points must be given as arrays with equivalent keys.
  * @param {Array<number>} a
  * @param {Array<number>} b
  * @return {number}
@@ -442,7 +442,7 @@ export const distance = (a: Array<number>, b: Array<number>) => {
     );
 };
 
-// TODO: analyse and complete the stats-function below
+// TODO: analyse and complete the stats-function below - preferably in separate files
 
 /**
  * meanSquareError returns the mean-square-error value from the array of numbers.
