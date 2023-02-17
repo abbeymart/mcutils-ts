@@ -88,7 +88,7 @@ export const getNames = (fullName: string): GetNames => {
     }
 };
 
-//
+
 /**
  * @function
  * @name camelCaseToUnderscore - computes and returns the underscore field name for the database table.
