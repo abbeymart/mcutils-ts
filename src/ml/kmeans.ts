@@ -34,9 +34,8 @@ export interface MinMaxType {
  *     // Inspect iteration logs to debug:
  *     console.log(kMeansSolver.iterationLogs)
  *
- * You MUST make sure that all data points given to this algorithm
- * have the same number of dimensions; you can not mix 2d points
- * with 3d points, for instance.
+ * All data points given to this algorithm must have the same number of dimensions;
+ * For instance, you can not mix 2D points with 3D points.
  */
 export class KMeans {
     private readonly k: number;
@@ -60,7 +59,6 @@ export class KMeans {
         this.iterationLogs = [];
         this.centroids = this.initRandomCentroids();
         this.centroidAssignments = [];
-        // this.reset();
     }
 
     /**
