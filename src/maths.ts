@@ -58,7 +58,7 @@ export function* factNumGen(num: number) {
  * @param num
  * @return number
  */
-export function factorialFromNumGen(num: number) {
+export function factorialFromNumGen(num: number): number {
     let result = 1;
     for (const val of factNumGen(num)) {
         result *= val;
