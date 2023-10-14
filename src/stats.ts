@@ -10,7 +10,7 @@ import { counter } from "./utilFuncs";
  * @param {number} [precision = 2]
  * @return {number}
  */
-export const mean = (arr: Array<number>, precision = 2): number => {
+export const mean = (arr: Array<number>, precision: number = 2): number => {
     if (precision < 1) {
         precision = 2 /// default
     }
@@ -26,9 +26,13 @@ export const mean = (arr: Array<number>, precision = 2): number => {
     return Number(result.toFixed(precision))
 }
 
-// geometricMean function returns the average of the arr value multiplication.
-// Optional precision parameter value defaults to 2, maximum of 16.
-export const geometricMean = (arr: Array<number>, precision = 2): number => {
+/**
+ * @function
+ * @name geometricMean function returns the average of the arr value multiplication.
+ * @param arr
+ * @param {number} [precision = 2] defaults to 2, maximum of 16.
+ */
+export const geometricMean = (arr: Array<number>, precision: number = 2): number => {
     if (precision < 1) {
         precision = 2 /// default
     }

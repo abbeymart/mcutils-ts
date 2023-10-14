@@ -7,4 +7,5 @@ export * from "./collection";
 export * from "./maths";
 export * from "./stats";
 export * from "./utilFuncs";
+export * from "./ml/kmeans"
 export { utils };

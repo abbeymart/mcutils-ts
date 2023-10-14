@@ -19,6 +19,7 @@ export interface MinMaxType {
 }
 
 /**
+ * @class
  * Determines "k" cluster centroids given a list of points,
  * using the k-means algorithm.
  *
@@ -47,8 +48,9 @@ export class KMeans {
     private centroidAssignments: Array<number>;
 
     /**
-     * @param k
-     * @param data
+     * @constructor
+     * @param k number
+     * @param data Array<number>
      */
     constructor(k: number, data: Array<Array<number>>) {
         this.k = k;
@@ -62,6 +64,7 @@ export class KMeans {
     }
 
     /**
+     * @method
      * Resets the solver state; use this if you wish to run the
      * same solver instance again with the same data points
      * but different initial conditions.
@@ -75,6 +78,7 @@ export class KMeans {
     }
 
     /**
+     * @method
      * Determines the number of dimensions in the data set.
      * @return {number}
      */
@@ -84,12 +88,13 @@ export class KMeans {
     }
 
     /**
+     * @method
      * For a given dimension in the data set, determine the minimum
      * and maximum value. This is used during random initialization
      * to make sure the random centroids are in the same range as
      * the data.
      *
-     * @param n
+     * @param n number
      * @returns {MinMaxType}
      */
     getRangeForDimension(n: number): MinMaxType {
@@ -101,6 +106,7 @@ export class KMeans {
     }
 
     /**
+     * @method
      * Get ranges for all dimensions.
      * @see getRangeForDimension
      * @returns {Array} Array whose indices are the dimension number and whose members are the output of getRangeForDimension
@@ -118,6 +124,7 @@ export class KMeans {
     }
 
     /**
+     * @method
      * Initializes random centroids, using the ranges of the data
      * to set minimum and maximum bounds for the centroids.
      * You may inspect the output of this method if you need to debug
@@ -151,12 +158,13 @@ export class KMeans {
     }
 
     /**
+     * @method
      * Given a point in the data to consider, determine the closest
      * centroid and assign the point to that centroid.
      * The return value of this method is a boolean which represents
      * whether the point's centroid assignment has changed;
      * this is used to determine the termination condition for the algorithm.
-     * @param pointIndex
+     * @param pointIndex  number
      * @returns {boolean} Did the point change its assignment?
      */
     assignPointToCentroid(pointIndex: number): boolean {
@@ -185,12 +193,13 @@ export class KMeans {
     }
 
     /**
+     * @method
      * For all points in the data, call assignPointsToCentroids
      * and returns whether _any_ point's centroid assignment has
-     * been updated.
+     * been updated.Was any point's centroid assignment updated?
      *
      * @see assignPointToCentroid
-     * @returns {boolean} Was any point's centroid assignment updated?
+     * @returns {boolean}
      */
     assignPointsToCentroids(): boolean {
         let didAnyPointsGetReassigned = false;
@@ -202,10 +211,11 @@ export class KMeans {
     }
 
     /**
+     * @method
      * Given a centroid to consider, returns an array
      * of all points assigned to that centroid.
      *
-     * @param centroidIndex
+     * @param centroidIndex number
      * @returns {Array}
      */
     getPointsForCentroid(centroidIndex: number): Array<Array<number>> {
@@ -220,9 +230,11 @@ export class KMeans {
     }
 
     /**
+     * @method
      * Given a centroid to consider, update its location to
      * the mean value of the positions of points assigned to it.
      * @see getPointsForCentroid
+     * @see getDimensionality
      * @param centroidIndex
      * @returns {Array}
      */
@@ -238,6 +250,7 @@ export class KMeans {
     }
 
     /**
+     * @method
      * For all centroids, call updateCentroidLocation
      */
     updateCentroidLocations() {
@@ -247,6 +260,7 @@ export class KMeans {
     }
 
     /**
+     * @method
      * Calculates the total "error" for the current state
      * of centroid positions and assignments.
      * Here, error is defined as the root-mean-squared distance
@@ -275,21 +289,13 @@ export class KMeans {
     }
 
     /**
+     * @method
      * Run the k-means algorithm until either the solver reaches steady-state,
      * or the maxIterations allowed has been exceeded.
-     *
-     * The return value from this method is an object with properties:
-     * {
-     *  centroids {Array.<Object>},
-     *  iteration {number},
-     *  error {number},
-     *  didReachSteadyState {Boolean}
-     * }
-     *
      * You are most likely interested in the centroids property of the output.
-     *
-     * @param {Number} maxIterations Default 1000
-     * @returns {Object}
+     * @see IterationLog
+     * @param maxIterations {number} Default 1000
+     * @returns {IterationLog}
      */
     solve(maxIterations = 1000): IterationLog {
 
@@ -321,6 +327,9 @@ export class KMeans {
 
 }
 
+/**
+ * @class
+ */
 export class KMeansAutoSolver {
     private readonly kMin: number;
     private readonly kMax: number;
@@ -329,6 +338,13 @@ export class KMeansAutoSolver {
     private best: IterationLog;
     protected log: Array<IterationLog>;
 
+    /**
+     * @constructor
+     * @param kMin
+     * @param kMax
+     * @param maxTrials
+     * @param data
+     */
     constructor(kMin = 1, kMax = 5, maxTrials = 5, data: Array<Array<number>>) {
         this.kMin = kMin;
         this.kMax = kMax;
@@ -339,11 +355,18 @@ export class KMeansAutoSolver {
         // this.reset();
     }
 
+    /**
+     * @method
+     */
     reset() {
         this.best = {};
         this.log = [];
     }
 
+    /**
+     * @method
+     * @param maxIterations number Default - 1000
+     */
     solve(maxIterations = 1000): IterationLog {
 
         for (let k = this.kMin; k < this.kMax; k++) {
