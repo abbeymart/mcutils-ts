@@ -171,24 +171,24 @@ export class KMeans {
 
         const lastAssignedCentroid = this.centroidAssignments[pointIndex];
         const point = this.data[pointIndex];
-        let minDistance = null;
-        let assignedCentroid = null;
+            let minDistance = null;
+            let assignedCentroid = null;
 
-        for (let i = 0; i < this.centroids.length; i++) {
-            const centroid = this.centroids[i];
-            const distanceToCentroid = distance(point, centroid);
+            for (let i = 0; i < this.centroids.length; i++) {
+                const centroid = this.centroids[i];
+                const distanceToCentroid = distance(point, centroid);
 
-            if (minDistance === null || distanceToCentroid < minDistance) {
-                minDistance = distanceToCentroid;
-                assignedCentroid = i;
+                if (minDistance === null || distanceToCentroid < minDistance) {
+                    minDistance = distanceToCentroid;
+                    assignedCentroid = i;
+                }
+
+            }
+            if (assignedCentroid) {
+                this.centroidAssignments[pointIndex] = assignedCentroid;
             }
 
-        }
-        if (assignedCentroid) {
-            this.centroidAssignments[pointIndex] = assignedCentroid;
-        }
-
-        return lastAssignedCentroid !== assignedCentroid;
+            return lastAssignedCentroid !== assignedCentroid;
 
     }
 

@@ -7,7 +7,7 @@ import { getResMessage, ResponseMessage } from "@mconnect/mcresponse";
 import Papa from "papaparse";
 import * as fs from "fs";
 import { open } from 'node:fs/promises';
-import { createReadStream, createWriteStream, readFileSync, writeFile, writeFileSync } from "fs";
+import { createReadStream, createWriteStream, readFileSync, writeFileSync } from "fs";
 import csv from "csvtojson";
 import { CSVParseParam } from "csvtojson/src/Parameters";
 import xml2js from "xml2js"
@@ -20,7 +20,7 @@ import xml2js from "xml2js"
  * @param {string} [middlename = ""]
  * @return {string}
  */
-export const getFullName = (firstname: string, lastname: string, middlename = ""): string => {
+export const getFullName = (firstname: string, lastname: string, middlename: string = ""): string => {
     if (firstname && middlename && lastname) {
         return `${firstname} ${middlename} ${lastname}`;
     }
@@ -132,7 +132,7 @@ export const caseFieldToUnderscore = (caseString: string): string => {
  * @param {string} text
  * @param {string} [sep = "_"]
  */
-export const separatorFieldToCamelCase = (text: string, sep = "_"): ComputationResponse => {
+export const separatorFieldToCamelCase = (text: string, sep: string = "_"): ComputationResponse => {
     // accepts word/text and separator[" ", "_", "__", ".", "|", "-"]
     const permittedSeparators = PERMITTED_SEPARATORS || [" ", "_", "__", ".", "|", "-"];
     if (!permittedSeparators.includes(sep)) {
@@ -163,7 +163,7 @@ export const separatorFieldToCamelCase = (text: string, sep = "_"): ComputationR
  * @param {string} [sep = "_"]
  * @return {ComputationResponse}
  */
-export const separatorFieldToPascalCase = (text: string, sep = "_"): ComputationResponse => {
+export const separatorFieldToPascalCase = (text: string, sep: string = "_"): ComputationResponse => {
     // accepts word/text and separator(" ", "_", "__", ".", "|")
     const permittedSeparators = PERMITTED_SEPARATORS || [" ", "_", "__", ".", "|", "-"];
     if (!permittedSeparators.includes(sep)) {
@@ -193,7 +193,7 @@ export const separatorFieldToPascalCase = (text: string, sep = "_"): Computation
  * @param {number} [maxLength = 20]
  * @return {string}
  */
-export function shortString(str: string, maxLength = 20): string {
+export function shortString(str: string, maxLength: number = 20): string {
     return str.toString().length > maxLength ? str.toString().substr(0, maxLength) + "..." : str.toString();
 }
 
@@ -223,7 +223,7 @@ export function getParamsMessage(msgObject: MessageObject): ResponseMessage {
  * @param {string} [val = "n"]
  * @return {boolean}
  */
-export function stringToBool(val = "n"): boolean {
+export function stringToBool(val: string = "n"): boolean {
     const strVal = val.toLowerCase();
     if (strVal === "true" || strVal === "t" || strVal === "yes" || strVal === "y") {
         return true;
@@ -239,7 +239,7 @@ export function stringToBool(val = "n"): boolean {
  * @param {string} itemName
  * @param {string} [itemPlural = ""]
  */
-export const pluralize = (num: number, itemName: string, itemPlural = ""): string => {
+export const pluralize = (num: number, itemName: string, itemPlural: string = ""): string => {
     // @TODO: retrieve plural for itemName from language dictionary {name: plural}
     let itemNamePlural: string;
     if (!itemPlural) {
@@ -261,7 +261,7 @@ export const pluralize = (num: number, itemName: string, itemPlural = ""): strin
  * @param {string} [userLang = "en-US"]
  * @return {string}
  */
-export const getLanguage = (userLang = "en-US"): string => {
+export const getLanguage = (userLang: string = "en-US"): string => {
     // Define/set default language variable
     let defaultLang = "en-US";
     // Set defaultLang to current userLang, set from the UI
@@ -278,7 +278,7 @@ export const getLanguage = (userLang = "en-US"): string => {
  * @param {ObjectType} [options = {}]
  * @return {Promise<ObjectType>}
  */
-export const userIpInfo = async (ipUrl = "https://ipinfo.io", options = {}): Promise<ObjectType> => {
+export const userIpInfo = async (ipUrl: string = "https://ipinfo.io", options: ObjectType = {}): Promise<ObjectType> => {
     // Get the current user IP address Information
     // TODO: use other method besides ipinfo.io, due to query limit (i.e. 429 error)
     try {
@@ -546,7 +546,7 @@ export function getAge(dateString: string): number {
  * @param {number} [ms=1000]
  * @return {Promise<void>}
  */
-export function sleep(ms = 1000) {
+export function sleep(ms: number = 1000): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 

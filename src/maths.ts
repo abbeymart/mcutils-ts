@@ -7,7 +7,8 @@ import { ArrayOfNumber, ArrayOfString, ArrayOfSymbol, ArrayValue, CounterType, C
  */
 export const leapYear = (year: number): boolean => {
     // by setting the day to the 29th and checking if the day remains
-    const febDate = new Date(year, 1, 29, 23, 0, 0, 0);
+    // Providing a day value of zero for the next month(2-for-March) gives you the previous month's(1-for-Feb) last day
+    const febDate = new Date(year, 2, 0);
     return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0) || febDate.getDate() === 29;
 }
 
@@ -212,7 +213,7 @@ export const pythagoras = (limit: number): Array<Array<number>> => {
     for (a = 1; a <= limit; a++) {
         for (b = a; b <= limit; b++) {
             const itemSqrt = Math.sqrt(a * a + b * b);
-            if (itemSqrt % 1.00 == 0 || itemSqrt % 1.00 == 0.00) {
+            if (itemSqrt % 1.00 === 0 || itemSqrt % 1.00 === 0.00) {
                 pResult.push([a, b, itemSqrt]);
             }
         }
@@ -299,4 +300,10 @@ export const setOfSymbol = (values: ArrayOfSymbol): ArrayOfSymbol => {
         }
     }
     return setValue
+}
+
+export const sumOfArray = (values: Array<number>, accumulator = 0): number => {
+    if (values.length === 0) return accumulator;
+    const [head, ...tail] = values;
+    return head? sumOfArray(tail, head + accumulator) : accumulator;
 }

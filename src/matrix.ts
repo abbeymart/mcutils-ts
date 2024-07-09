@@ -115,7 +115,7 @@ export const subtractMatrices = (matrix1: Array<Array<number>>, matrix2: Array<A
     // initialize the matrix result
     let result: Array<Array<number>> = []
     // validate matrix1 and matrix2 length
-    if (matrix1.length != matrix2.length) {
+    if (matrix1.length !== matrix2.length) {
         return {
             code   : "paramsError",
             message: `length of both matrices should be equal [matrix1: ${matrix1.length} | matrix2: ${matrix2.length}]`,
@@ -130,7 +130,7 @@ export const subtractMatrices = (matrix1: Array<Array<number>>, matrix2: Array<A
         const mat1 = matrix1[matrixIndex]
         const mat2 = matrix2[matrixIndex]
         // validate matrix1 and matrix2 sub-items length
-        if (mat1.length != subItemLength || mat2.length != subItemLength) {
+        if (mat1.length !== subItemLength || mat2.length !== subItemLength) {
             result = []
             return {
                 code   : "paramsError",

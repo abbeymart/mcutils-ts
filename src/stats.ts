@@ -185,7 +185,7 @@ export const interval = (arr: Array<number>): number => {
  * @param {string} [valueLabel="value"]
  * @return {FrequencyResult}
  */
-export const frequency = (arr: Array<number>, interval = 1, valueLabel = "value"): FrequencyResult => {
+export const frequency = (arr: Array<number>, interval: number = 1, valueLabel: string = "value"): FrequencyResult => {
     if (interval < 1) {
         interval = 1 /// default
     }
@@ -241,7 +241,7 @@ export const frequency = (arr: Array<number>, interval = 1, valueLabel = "value"
  * @param {string} [valueLabel="value"]
  * @return {StatFrequencyResult}
  */
-export const frequencyStat = (arr: Array<number>, interval = 1, valueLabel = "value"): StatFrequencyResult => {
+export const frequencyStat = (arr: Array<number>, interval: number = 1, valueLabel: string = "value"): StatFrequencyResult => {
     if (interval < 1) {
         interval = 1 /// default
     }
@@ -281,7 +281,7 @@ export const frequencyStat = (arr: Array<number>, interval = 1, valueLabel = "va
  * @param {number} [precision=2]
  * @return {QuartilesType}
  */
-export const IQRange = (arr: Array<number>, precision = 2): QuartilesType => {
+export const IQRange = (arr: Array<number>, precision: number = 2): QuartilesType => {
     if (precision < 1) {
         precision = 2 /// default
     }
@@ -334,7 +334,7 @@ export const IQRange = (arr: Array<number>, precision = 2): QuartilesType => {
  * @param {Array<number>}  arr
  * @param {number} [precision=2]
  * @return {QuartilesType} */
-export const deciles = (arr: Array<number>, precision = 2): QuartilesType => {
+export const deciles = (arr: Array<number>, precision: number = 2): QuartilesType => {
     if (precision < 1) {
         precision = 2 /// default
     }
@@ -387,7 +387,7 @@ export const deciles = (arr: Array<number>, precision = 2): QuartilesType => {
  * @param {Array<number>}  arr
  * @param {number} [precision=2]
  * @return {QuartilesType} */
-export const percentiles = (arr: Array<number>, precision = 2): QuartilesType => {
+export const percentiles = (arr: Array<number>, precision: number = 2): QuartilesType => {
     if (precision < 1) {
         precision = 2 /// default
     }
@@ -434,13 +434,21 @@ export const percentiles = (arr: Array<number>, precision = 2): QuartilesType =>
 }
 
 /**
- * distance function calculate the distance between two points.
- * Points must be given as arrays with equivalent keys.
- * @param {Array<number>} a
- * @param {Array<number>} b
+ * distance function calculate the distance between two points. | TODO: review algorithm
+ * Points must be given as arrays with equivalent length/coordinates.
  * @return {number}
+ * @param pointA
+ * @param pointB
  */
-export const distance = (a: Array<number>, b: Array<number>) => {
+export const distance = (pointA: Array<number>, pointB: Array<number>): number => {
+    let sumOfDiffSquares: number = 0;
+    for (let i = 0; i < pointA.length; i++) {
+        sumOfDiffSquares += Math.pow(pointB[i] - pointA[i], 2);
+    }
+    return Math.sqrt(sumOfDiffSquares);
+};
+
+export const distance2 = (a: Array<number>, b: Array<number>) => {
     return Math.sqrt(a.map((aPoint, i) => b[i] - aPoint)
         .reduce((sumOfSquares, diff) => sumOfSquares + (diff * diff), 0)
     );
