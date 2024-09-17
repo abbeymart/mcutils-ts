@@ -260,8 +260,11 @@ export type SetValueType = string | number | boolean | symbol;
 export const set = <T extends SetValueType>(values: ArrayValue<T>): Array<T> => {
     const setValue: Array<T> = [];
     for (const it of values) {
-        const itExist = setValue.indexOf(it);
-        if (itExist === -1) {
+        // const itExist = setValue.indexOf(it);
+        // if (itExist === -1) {
+        //     setValue.push(it);
+        // }
+        if (!setValue.includes(it)) {
             setValue.push(it);
         }
     }
@@ -272,8 +275,7 @@ export const set = <T extends SetValueType>(values: ArrayValue<T>): Array<T> => 
 export const setOfString = (values: ArrayOfString): ArrayOfString => {
     const setValue: ArrayOfString = [];
     for (const it of values) {
-        const itExist = setValue.indexOf(it);
-        if (itExist === -1) {
+        if (!setValue.includes(it)) {
             setValue.push(it);
         }
     }
@@ -283,8 +285,7 @@ export const setOfString = (values: ArrayOfString): ArrayOfString => {
 export const setOfNumber = (values: ArrayOfNumber): ArrayOfNumber => {
     const setValue: ArrayOfNumber = [];
     for (const it of values) {
-        const itExist = setValue.indexOf(it);
-        if (itExist === -1) {
+        if (!setValue.includes(it)) {
             setValue.push(it);
         }
     }
@@ -294,16 +295,31 @@ export const setOfNumber = (values: ArrayOfNumber): ArrayOfNumber => {
 export const setOfSymbol = (values: ArrayOfSymbol): ArrayOfSymbol => {
     const setValue: ArrayOfSymbol = [];
     for (const it of values) {
-        const itExist = setValue.indexOf(it);
-        if (itExist === -1) {
+        if (!setValue.includes(it)) {
             setValue.push(it);
         }
     }
     return setValue
 }
 
-export const sumOfArray = (values: Array<number>, accumulator = 0): number => {
+export const sumOfArrayAcc = (values: Array<number>, accumulator = 0): number => {
     if (values.length === 0) return accumulator;
     const [head, ...tail] = values;
-    return head? sumOfArray(tail, head + accumulator) : accumulator;
+    return head ? sumOfArrayAcc(tail, head + accumulator) : accumulator;
+}
+
+export const sumOfArray = (values: Array<number>): number => {
+    let sum = 0
+    for (const value of values) {
+        sum += value
+    }
+    return sum;
+}
+
+export const multiplyArray = (values: Array<number>): number => {
+    let multi = 1
+    for (const value of values) {
+        multi *= value
+    }
+    return multi;
 }
