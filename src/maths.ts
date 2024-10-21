@@ -9,7 +9,8 @@ export const leapYear = (year: number): boolean => {
     // by setting the day to the 29th and checking if the day remains
     // Providing a day value of zero for the next month(2-for-March) gives you the previous month's(1-for-Feb) last day
     const febDate = new Date(year, 2, 0);
-    return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0) || febDate.getDate() === 29;
+    // year%4 == 0 && (year%100 != 0 || year%400 == 0)
+    return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0) || febDate.getDate() === 29;
 }
 
 /**
