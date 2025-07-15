@@ -225,7 +225,7 @@ export const pythagoras = (limit: number): Array<Array<number>> => {
 /**
  * pythagorasGen generator function returns series of the array value (<Array> of a regular pythagoras [base, adjacent, hypothenus].
  */
-export function* pythagorasGen(limit: number) {
+export function* pythagorasGen(limit: number): Generator<Array<number>> {
     let a: number, b: number;
     for (a = 1; a <= limit; a++) {
         for (b = a; b <= limit; b++) {

@@ -2,14 +2,14 @@ export type MapFunc<T> = (val: T) => T;
 export type FilterFunc<T> = (val: T) => boolean;
 
 // mapGen generator-function yields series of transformed values, by the map-callback-function, from the val/array values.
-export function* mapGen<T>(val: Array<T>, mapFunc: MapFunc<T>) {
+export function* mapGen<T>(val: Array<T>, mapFunc: MapFunc<T>): Generator<T> {
     for (const it of val) {
         yield mapFunc(it);
     }
 }
 
 // filterGen generator-function yields series of values, that conforms to the filter-callback-function, from the val/array values.
-export function* filterGen<T>(val: Array<T>, filterFunc: FilterFunc<T>) {
+export function* filterGen<T>(val: Array<T>, filterFunc: FilterFunc<T>): Generator<T> {
     for (const it of val) {
         if (filterFunc(it)) {
             yield it;
@@ -18,7 +18,7 @@ export function* filterGen<T>(val: Array<T>, filterFunc: FilterFunc<T>) {
 }
 
 // takeGen generator-function yields series of values up to num from the val/array values.
-export function* takeGen<T>(val: Array<T>, num: number) {
+export function* takeGen<T>(val: Array<T>, num: number): Generator<T> {
     let count = 0;
     while (count < num) {
         yield val[count];
@@ -38,7 +38,7 @@ export function take<T>(val: Array<T>, num: number): Array<T> {
 }
 
 // takeGenVer2 generator-function yields series of values up to num from the val/array values.
-export function* takeGenVer2<T>(val: Array<T>, num: number) {
+export function* takeGenVer2<T>(val: Array<T>, num: number): Generator<T> {
     let count = 0;
     for (const it of val) {
         count += 1;

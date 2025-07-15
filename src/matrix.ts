@@ -411,7 +411,7 @@ export const divideScalarMatrix = (matrix: Array<Array<number>>, scalar: number,
 }
 
 /**
- * transposeMatrix function transpose the matrix - swap rows and columns, i.e. rotate the matrix around it's diagonal.
+ * transposeMatrix function transpose the matrix - swap rows and columns, i.e. rotate the matrix around its diagonal.
  */
 export const transposeMatrix = (matrix: Array<Array<number>>): MatrixResult => {
     // initialize the matrix result
