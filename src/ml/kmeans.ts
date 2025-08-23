@@ -297,7 +297,7 @@ export class KMeans {
      * @param maxIterations {number} Default 1000
      * @returns {IterationLog}
      */
-    solve(maxIterations = 1000): IterationLog {
+    solve(maxIterations: number = 1000): IterationLog {
 
         while (this.iterations < maxIterations) {
 
