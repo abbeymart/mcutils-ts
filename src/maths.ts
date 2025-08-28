@@ -324,3 +324,7 @@ export const multiplyArray = (values: Array<number>): number => {
     }
     return multi;
 }
+
+export const multiplyArray2 = (values: Array<number>): number => {
+    return  values.reduce((acc, cur) => acc * cur, 1)
+}
