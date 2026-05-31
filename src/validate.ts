@@ -43,7 +43,7 @@ export const isArrayType = (param: Array<ValueType>): boolean => {
     return Array.isArray(param);
 };
 
-// isStringChar validates that param is characters string (no numbers), including spaces.
+// isStringChar validates that param is character string (no numbers), including spaces.
 export const isStringChar = (param: string): boolean => {
     // Validate that param is a string (characters only) -- use regEx
     const charRegEx = /^[a-z\sA-Z&$_\-]+$/;

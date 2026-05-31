@@ -32,7 +32,7 @@ export default {
                 lastName,
             };
         }
-        // Return firstName, middleName and lastName based on fullName components ([0],[1],[2])
+        // Return firstName, middleName and lastName based on fullName components ([0], [1], [2])
     },
     pluralize(n: number, itemName: string, itemPlural = ''): string {
         // @TODO: retrieve plural for itemName from language dictionary {name: plural}

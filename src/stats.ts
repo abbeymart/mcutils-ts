@@ -196,7 +196,7 @@ export const frequency = (arr: Array<number>, interval: number = 1, valueLabel: 
     const max = arr[arrLength - 1]
     const freqValue: Array<FrequencyValue> = []
     if (interval == 1) {
-        // Obtain the counter values for the arr items
+        // Get the counter-values for the arr items
         const arrCounters = counter(arr)
         // compute the frequency/occurrence
         for (const [_, cVal] of Object.entries(arrCounters)) {
@@ -309,7 +309,7 @@ export const IQRange = (arr: Array<number>, precision: number = 2): QuartilesTyp
         Q3 = median(arr.slice(arrLength / 2,), precision)
         IQR = Q3 - Q1
     } else {
-        const halfDataLength = arrLength / 2 // the ceiling value, i.e.  11, 5
+        const halfDataLength = arrLength / 2 // the ceiling value, i.e., 11, 5
         // compute medians (Q1 and Q3) to be inclusive of Q2(arr-median)
         Q1 = median(arr.slice(0, halfDataLength + 1), precision)
         Q3 = median(arr.slice(halfDataLength,), precision)
@@ -362,7 +362,7 @@ export const deciles = (arr: Array<number>, precision: number = 2): QuartilesTyp
         Q3 = median(arr.slice(arrLength / 2,), precision)
         IQR = Q3 - Q1
     } else {
-        const halfDataLength = arrLength / 2 // the ceiling value, i.e.  11, 5
+        const halfDataLength = arrLength / 2 // the ceiling value, i.e., 11, 5
         // compute medians (Q1 and Q3) to be inclusive of Q2(arr-median)
         Q1 = median(arr.slice(0, halfDataLength + 1), precision)
         Q3 = median(arr.slice(halfDataLength,), precision)
@@ -415,7 +415,7 @@ export const percentiles = (arr: Array<number>, precision: number = 2): Quartile
         Q3 = median(arr.slice(arrLength / 2,), precision)
         IQR = Q3 - Q1
     } else {
-        const halfDataLength = arrLength / 2 // the ceiling value, i.e.  11, 5
+        const halfDataLength = arrLength / 2 // the ceiling value, i.e., 11, 5
         // compute medians (Q1 and Q3) to be inclusive of Q2(arr-median)
         Q1 = median(arr.slice(0, halfDataLength + 1), precision)
         Q3 = median(arr.slice(halfDataLength,), precision)

@@ -1,4 +1,4 @@
-import {KMeans, KMeansAutoSolver} from "../../src/ml/kmeans";
+import {KMeans, KMeansAutoSolver} from "../../src";
 import { example3d3k, example2dnk, example2d3k, exampleRandomCentroids } from './data/kmeans';
 
 console.log("\nML in JS Chapter 4 k-means clustering examples.");

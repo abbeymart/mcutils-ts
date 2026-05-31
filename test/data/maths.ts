@@ -54,7 +54,7 @@ export const setStingResult = ["a", "b"];
 export const setBooleanResult = [true, false];
 export const setSymbolResult = [Symbol("abc"), Symbol("bcd"), Symbol("abc"), Symbol("bcd"), Symbol("abc")];
 
-// symbol key:value counter value will always be 1, since symbol-key is globally unique.
+// symbol key:value counter value will always be 1, since the symbol-key is globally unique.
 // export const countSymbolResult: CounterType = {
 //     [Symbol("abc")]: 1,
 //     [Symbol("bcd")]: 1,

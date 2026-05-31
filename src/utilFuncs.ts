@@ -9,7 +9,7 @@ import * as fs from "fs";
 import { open } from 'node:fs/promises';
 import { createReadStream, createWriteStream, readFileSync, writeFileSync } from "fs";
 import csv from "csvtojson";
-import { CSVParseParam } from "csvtojson/src/Parameters";
+import { CSVParseParam } from "csvtojson/v2/Parameters";
 import xml2js from "xml2js"
 
 /**
@@ -39,7 +39,7 @@ export interface GetNames {
 // .
 /**
  * @function
- * @name counter - method returns the unique counts of the specified array/slice values[object, int, float, string and bool]
+ * @name counter - method returns the unique counts of the specified array/slice values[object, int, float, string, and bool]
  * @param {ArrayValue<any>} val
  * @return {CounterResult}
  */
@@ -67,7 +67,7 @@ export const counter = <T extends ValueType>(val: ArrayValue<T>): CounterResult<
 //
 /**
  * @function
- * @name getNames - computes/returns firstname, middlename and lastname based on fullName components ([0],[1],[2]).
+ * @name getNames - computes/returns firstname, middlename, and lastname based on fullName components ([0], [1], [2]).
  * @param {string} fullName
  * @return {GetNames}
  */
@@ -199,7 +199,7 @@ export function shortString(str: string, maxLength: number = 20): string {
 
 /**
  * @function
- * @name getParamsMessage returns the composite message from message-object (key:value pairs).
+ * @name getParamsMessage returns the composite message from the message-object (key:value pairs).
  * @param msgObject
  */
 export function getParamsMessage(msgObject: MessageObject): ResponseMessage {
@@ -338,7 +338,7 @@ export const currentUrlInfo = (pathLoc: string): UrlPathInfo => {
 
 /**
  * @function
- * @name getPath returns the root path of the URL, i.e. path after the hostname.
+ * @name getPath returns the root path of the URL, i.e., path after the hostname.
  * @param {Request} req
  * @return {string}
  */
@@ -489,7 +489,7 @@ export function getLocale2(localeFiles: LocaleFilesType, options: LocaleOptions 
         throw new Error("Locale files should be an object and not empty")
     }
 
-    // const localeType = options && options.type ? options.type : "";
+    // const localeType = options && options.type ? options.type: "";
     const language = options && options.language ? options.language : "en-US";
 
     // set the locale file contents
@@ -804,7 +804,7 @@ export async function csvFileToObject2(params: CsvToJsonParams): Promise<Respons
  * @function
  * @name xmlToJsonFile - function converts xml-file to json-file. It returns the object-value equivalent.
  * @param {XmlToJsonParams} params
- * @return {Promise<ResponseMessage>.Array<ObjectType>} - return value is an array of object
+ * @return {Promise<ResponseMessage>.Array<ObjectType>} - return value is an array of objects
  */
 export async function xmlToJsonFile(params: XmlToJsonParams): Promise<ResponseMessage> {
     try {
