@@ -1,4 +1,5 @@
-import { CSVParseParam } from "csvtojson/src/Parameters";
+import { CSVParseParam } from "csvtojson/v2/Parameters";
+
 
 export type ValueType =
     Record<string, unknown>
@@ -32,7 +33,7 @@ export interface Locale {
 }
 
 export interface LocaleFilesType {
-    [key: string]: Locale;      // key => language ("en-US", "en-CA", "yoruba", "fr-CA", "fr-FR" etc.)
+    [key: string]: Locale;      // key => language ("en-US", "en-CA", "yoruba", "fr-CA", "fr-FR", etc.)
 }
 
 export interface MessageObject {

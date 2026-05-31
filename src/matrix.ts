@@ -106,7 +106,7 @@ export const addMultipleMatrices = (matrices: Array<Array<Array<number>>>, preci
 }
 
 /**
- * subtractMatrices function subtract two matrices of the same dimensions.
+ * subtractMatrices function subtracts two matrices of the same dimensions.
  */
 export const subtractMatrices = (matrix1: Array<Array<number>>, matrix2: Array<Array<number>>, precision = 0): MatrixResult => {
     if (precision < 0) {
@@ -311,7 +311,7 @@ export const subtractScalarMatrix = (matrix: Array<Array<number>>, scalar: numbe
 }
 
 /**
- * multiplyScalarMatrix function multiply a scalar Value with the matrix/matrices.
+ * multiplyScalarMatrix function multiplies a scalar Value with the matrix/matrices.
  */
 export const multiplyScalarMatrix = (matrix: Array<Array<number>>, scalar: number, precision = 0): MatrixResult => {
     if (precision < 0) {
@@ -411,7 +411,7 @@ export const divideScalarMatrix = (matrix: Array<Array<number>>, scalar: number,
 }
 
 /**
- * transposeMatrix function transpose the matrix - swap rows and columns, i.e. rotate the matrix around its diagonal.
+ * transposeMatrix function transposes the matrix - swap rows and columns, i.e., rotate the matrix around its diagonal.
  */
 export const transposeMatrix = (matrix: Array<Array<number>>): MatrixResult => {
     // initialize the matrix result
@@ -485,7 +485,7 @@ export const multiplyMatrix = (matrix1: Array<number>, matrix2: Array<Array<numb
     let mat1ColCount = 0
     const matMultiSlices: Array<Array<number>> = [] // Required to compute the summation of the row-column multiplications
     while (mat1ColCount < mat1Columns) {
-        // compose multiplication Slice, by matching matrix1-row/matrix2-columns
+        // compose multiplication Slice by matching matrix1-row/matrix2-columns
         const mat1ColVal = mat1Slice[mat1ColCount]
         const mat2ColSlice = matrix2[mat1ColCount]
         const matMultiSlice: Array<number> = []
@@ -517,7 +517,7 @@ export const multiplyMatrix = (matrix1: Array<number>, matrix2: Array<Array<numb
 }
 
 /**
- * multiplyMatrices function multiply two matrices - tensors.
+ * multiplyMatrices function multiplies two matrices - tensors.
  * The number of rows in matrix1 sub-matrices must be the same as the number of columns in matrix2.
  */
 export const multiplyMatrices = (matrix1: Array<Array<number>>, matrix2: Array<Array<number>>, precision = 0): MatrixResult => {

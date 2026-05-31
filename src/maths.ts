@@ -1,12 +1,12 @@
 import { ArrayOfNumber, ArrayOfString, ArrayOfSymbol, ArrayValue, CounterType, CounterValueType } from "./types";
 
 /**
- * leapYear determines if the given year(e.g. 2000) is a leap year, i.e. February day === 29.
+ * leapYear determines if the given year (e.g., 2000) is a leap year, i.e., February day === 29.
  * @param year
  * @return boolean
  */
 export const leapYear = (year: number): boolean => {
-    // by setting the day to the 29th and checking if the day remains
+    // by setting the day to the 29th and checking if the day remaining
     // Providing a day value of zero for the next month(2-for-March) gives you the previous month's(1-for-Feb) last day
     const febDate = new Date(year, 2, 0);
     // year%4 == 0 && (year%100 != 0 || year%400 == 0)
@@ -44,7 +44,7 @@ export const factorialSeries = (num: number): number => {
 }
 
 /**
- * factNumGen generates factorial numbers up to the specified limit (num).
+ * the factNumGen function generates factorial numbers up to the specified limit (num).
  * @param num
  * @yield
  */
@@ -69,7 +69,7 @@ export function factorialFromNumGen(num: number): number {
 }
 
 /**
- * fibos returns the fibo series, as array of numbers.
+ * fibos returns the fibo series, as an array of numbers.
  * @param num
  * @return Array<number>
  */
@@ -154,7 +154,7 @@ export function* positiveNumbers(count: number) {
 
 /**
  * primeNumbers returns the prime numbers from 2 up to num.
- * prime number is a number that's only divisible by itself.
+ * a prime number is a number that's only divisible by itself.
  */
 export const primeNumbers = (num: number): Array<number> => {
     const pNums: Array<number> = [];
@@ -206,7 +206,7 @@ export function* reverseArrayGen<T>(arr: Array<T>) {
 }
 
 /**
- * pythagoras function returns all the arrays(Array<Array>) of a regular pythagoras [base, adjacent, hypothenus].
+ * pythagoras function returns all the arrays (Array<Array>) of a regular pythagoras [base, adjacent, hypothenus].
  */
 export const pythagoras = (limit: number): Array<Array<number>> => {
     const pResult: Array<Array<number>> = [];
@@ -223,7 +223,7 @@ export const pythagoras = (limit: number): Array<Array<number>> => {
 }
 
 /**
- * pythagorasGen generator function returns series of the array value (<Array> of a regular pythagoras [base, adjacent, hypothenus].
+ * pythagorasGen generator function returns a series of the array value (<Array> of a regular pythagoras [base, adjacent, hypothenus].
  */
 export function* pythagorasGen(limit: number): Generator<Array<number>> {
     let a: number, b: number;
@@ -238,7 +238,7 @@ export function* pythagorasGen(limit: number): Generator<Array<number>> {
 }
 
 /**
- * counterGeneric supports types - number, string and symbol only.
+ * counterGeneric supports types - number, string, and symbol only.
  */
 export const counterGeneric = (values: ArrayValue<CounterValueType>): CounterType => {
     const counterObject: CounterType = {};

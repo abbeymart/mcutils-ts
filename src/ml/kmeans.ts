@@ -36,7 +36,7 @@ export interface MinMaxType {
  *     console.log(kMeansSolver.iterationLogs)
  *
  * All data points given to this algorithm must have the same number of dimensions;
- * For instance, you can not mix 2D points with 3D points.
+ * For instance, you cannot mix 2D points with 3D points.
  */
 export class KMeans {
     private readonly k: number;
@@ -145,7 +145,7 @@ export class KMeans {
             let point = [];
 
             /**
-             * For each dimension in the data find the min/max range of that dimension,
+             * For each dimension in the data, find the min/max range of that dimension
              * and choose a random value that lies within that range.
              */
             for (let dimension = 0; dimension < dimensionality; dimension++) {
@@ -161,7 +161,7 @@ export class KMeans {
      * @method
      * Given a point in the data to consider, determine the closest
      * centroid and assign the point to that centroid.
-     * The return value of this method is a boolean which represents
+     * The return value of this method is a boolean, which represents
      * whether the point's centroid assignment has changed;
      * this is used to determine the termination condition for the algorithm.
      * @param pointIndex  number
@@ -263,7 +263,7 @@ export class KMeans {
      * @method
      * Calculates the total "error" for the current state
      * of centroid positions and assignments.
-     * Here, error is defined as the root-mean-squared distance
+     * Here error is defined as the root-mean-squared distance
      * of all points to their centroids.
      * @returns {Number}
      */
@@ -275,7 +275,7 @@ export class KMeans {
             const centroid = this.centroids[centroidIndex];
             const point = this.data[i];
 
-            // Un-comment this one to do a purely geometrical error calculation
+            // Uncomment this one to do a purely geometrical error calculation
             // const thisDistance = distance(point, centroid);
 
             // This version also considers the number of clusters; helpful for
@@ -292,7 +292,7 @@ export class KMeans {
      * @method
      * Run the k-means algorithm until either the solver reaches steady-state,
      * or the maxIterations allowed has been exceeded.
-     * You are most likely interested in the centroids property of the output.
+     * You are most likely interested in the centroid property of the output.
      * @see IterationLog
      * @param maxIterations {number} Default 1000
      * @returns {IterationLog}
