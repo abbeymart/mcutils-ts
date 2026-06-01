@@ -3,6 +3,12 @@
 ***** Work-In-Progress ***** 
 - TODO: update documentation
 
+## Version 0.2.7
+
+- Release date: TBD
+- updated-deps-ts-config-and-comments-v0.2.7 (May-31-2026)
+
+
 ## Version 0.2.6
 
 - Release date: Feb 06, 2023
