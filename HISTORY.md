@@ -5,7 +5,7 @@
 
 ## Version 0.2.7
 
-- Release date: TBD
+- Release date: May-31-2026
 - updated-deps-ts-config-and-comments-v0.2.7 (May-31-2026)
 
 
